@@ -46,7 +46,8 @@
     "check:size": "node scripts/check-pack-size.mjs",
     "start": "node dist/index.js",
     "prepublishOnly": "npm run lint && npm run typecheck && npm test && npm run build",
-    "gen:schema": "npm run build && node scripts/gen-schema.mjs"
+    "gen:schema": "npm run build && node scripts/gen-schema.mjs",
+    "gen:samples": "vitest run tests/samples.test.ts -u"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "^2.4.0",

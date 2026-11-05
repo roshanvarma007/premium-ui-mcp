@@ -127,3 +127,28 @@ describe('MCP server', () => {
     expect(msg.text).toMatch(/My idea: a bank/);
   });
 });
+
+describe('get_theme_code', () => {
+  it('returns compose files and next steps', async () => {
+    const r = await call('get_theme_code', { direction_id: 'fintech-trust', platform: 'compose' });
+    expect(r.isError).toBeFalsy();
+    const files = r.structuredContent?.files as Array<{ path: string }>;
+    expect(files.map((f) => f.path)).toContain(
+      'app/src/main/java/com/example/app/ui/theme/Theme.kt',
+    );
+    expect(text(r)).toMatch(/Next steps:/);
+  });
+  it('rejects an unknown direction with the list of valid ids', async () => {
+    const r = await call('get_theme_code', { direction_id: 'nope', platform: 'compose' });
+    expect(r.isError).toBe(true);
+    expect(text(r)).toMatch(/fintech-trust/);
+  });
+  it('rejects an invalid package name', async () => {
+    const r = await call('get_theme_code', {
+      direction_id: 'fintech-trust',
+      platform: 'compose',
+      package_name: 'Not A Package',
+    });
+    expect(r.isError).toBe(true);
+  });
+});

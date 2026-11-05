@@ -65,3 +65,35 @@ Milestone-by-milestone record of the build (see SPEC.md section 14).
   With one direction, alternates are always empty.
 - Not done: registering the server in your Claude Code config (`claude mcp add`). That changes
   your user settings, so I left it for you.
+
+## M3: Compose adapter (done)
+
+- New tool `get_theme_code`. It takes `platform` as one id or an array, plus `mode`, `language`, `router`,
+  `package_name`, and `font_source` (`self-hosted` default, `google-fonts` opt-in, as agreed).
+  `src/adapters/model.ts` holds the shared derived values (palette resolution, on-colors for semantic
+  fills, type roles, spacing names, font file naming), so every adapter agrees.
+- `compose` adapter (`src/adapters/android/compose.ts`) generates Color.kt, Type.kt, Shape.kt,
+  Spacing.kt and Theme.kt:
+  - `AppColors`, `AppTypography` (the 7 roles), `AppShapes` and `Spacing` (`s4` = 4 × base), exposed
+    through `AppTheme.colors/type/shapes/spacing`.
+  - Every Material 3 color role is mapped, including the 1.4 "fixed" roles. I found those by
+    inspecting the compiled `ColorScheme` class, so stock components never show baseline purple.
+  - The 7 roles are mapped onto the 15 M3 typography slots without inventing new sizes.
+  - Fonts: bundled `res/font` files by default. With `google-fonts`, it generates Downloadable Fonts
+    code plus `font_certs.xml`, copied verbatim from the official Android samples (Apache-2.0).
+- Sample `examples/compose-sample/`: AGP 9.5.0 (built-in Kotlin), Kotlin/Compose plugin 2.4.21,
+  Compose BOM 2026.09.00 (Material 3 1.4.0), Gradle 9.7.1 wrapper with a pinned SHA-256, compileSdk 37.
+  Two product flavors compile both font strategies. The theme files are generated, and a vitest
+  `toMatchFileSnapshot` test keeps them identical to the adapter output (`npm run gen:samples`).
+  The demo screen is a banking home that uses only tokens.
+  - Fonts: static OFL TTFs for Fraunces, Manrope and JetBrains Mono from the Google Fonts API, with
+    OFL texts from google/fonts. They live in examples/ only and are not in the npm package.
+- **Compile check: `./gradlew :app:assembleDebug` succeeds locally for both flavors.** A CI job
+  `compose-sample` was added (temurin 21 + setup-android). It is not run yet because nothing is pushed.
+- Findings:
+  - Compose BOM 2026.09 requires compileSdk 37. The next_steps now say so.
+  - Local-only environment quirk: Gradle failed with "Unable to establish loopback connection"
+    from the JDK's AF_UNIX selector. It was fixed by running with
+    `JAVA_TOOL_OPTIONS=-Djdk.net.unixdomain.tmpdir=C:\Windows\Temp`.
+    This does not affect CI or users. The build also had to run outside the tool sandbox.
+- Results: 69/69 tests pass (including snapshots); lint and typecheck pass.
