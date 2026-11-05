@@ -1,0 +1,1044 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 240
+    },
+    "best_for": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "avoid_for": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "mood": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "color": {
+      "type": "object",
+      "properties": {
+        "light": {
+          "type": "object",
+          "properties": {
+            "bg": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Page / screen background"
+            },
+            "surface": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Cards, sheets, primary containers"
+            },
+            "surface_alt": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Secondary containers, filled inputs, table stripes"
+            },
+            "text": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Primary text. Must reach 4.5:1 on bg, surface and surface_alt"
+            },
+            "text_muted": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Secondary text. Must reach 4.5:1 on bg, surface and surface_alt"
+            },
+            "border": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Decorative hairlines and dividers (no contrast requirement)"
+            },
+            "border_strong": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Boundaries that identify controls, such as input outlines. Must reach 3:1 on bg and surface"
+            },
+            "accent": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "The single accent. 3:1 on bg and surface; 4.5:1 when no separate link color is set"
+            },
+            "on_accent": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Text and icons on accent fills. Must reach 4.5:1 on accent"
+            },
+            "link": {
+              "description": "Optional link text color, when accent is not dark/light enough for body links",
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$"
+            },
+            "success": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Meaning only. Must reach 4.5:1 on bg and surface"
+            },
+            "warning": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Meaning only. Must reach 4.5:1 on bg and surface"
+            },
+            "error": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Meaning only. Must reach 4.5:1 on bg and surface"
+            }
+          },
+          "required": [
+            "bg",
+            "surface",
+            "surface_alt",
+            "text",
+            "text_muted",
+            "border",
+            "border_strong",
+            "accent",
+            "on_accent",
+            "success",
+            "warning",
+            "error"
+          ],
+          "additionalProperties": false
+        },
+        "dark": {
+          "type": "object",
+          "properties": {
+            "bg": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Page / screen background"
+            },
+            "surface": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Cards, sheets, primary containers"
+            },
+            "surface_alt": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Secondary containers, filled inputs, table stripes"
+            },
+            "text": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Primary text. Must reach 4.5:1 on bg, surface and surface_alt"
+            },
+            "text_muted": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Secondary text. Must reach 4.5:1 on bg, surface and surface_alt"
+            },
+            "border": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Decorative hairlines and dividers (no contrast requirement)"
+            },
+            "border_strong": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Boundaries that identify controls, such as input outlines. Must reach 3:1 on bg and surface"
+            },
+            "accent": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "The single accent. 3:1 on bg and surface; 4.5:1 when no separate link color is set"
+            },
+            "on_accent": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Text and icons on accent fills. Must reach 4.5:1 on accent"
+            },
+            "link": {
+              "description": "Optional link text color, when accent is not dark/light enough for body links",
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$"
+            },
+            "success": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Meaning only. Must reach 4.5:1 on bg and surface"
+            },
+            "warning": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Meaning only. Must reach 4.5:1 on bg and surface"
+            },
+            "error": {
+              "type": "string",
+              "pattern": "^#[0-9A-F]{6}$",
+              "description": "Meaning only. Must reach 4.5:1 on bg and surface"
+            }
+          },
+          "required": [
+            "bg",
+            "surface",
+            "surface_alt",
+            "text",
+            "text_muted",
+            "border",
+            "border_strong",
+            "accent",
+            "on_accent",
+            "success",
+            "warning",
+            "error"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "light",
+        "dark"
+      ],
+      "additionalProperties": false
+    },
+    "typography": {
+      "type": "object",
+      "properties": {
+        "display_family": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "license": {
+              "type": "string",
+              "enum": [
+                "OFL-1.1",
+                "Apache-2.0",
+                "UFL-1.0",
+                "MIT"
+              ]
+            },
+            "source": {
+              "type": "string",
+              "enum": [
+                "google-fonts",
+                "fontsource",
+                "bundled"
+              ]
+            },
+            "weights": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 900
+              },
+              "description": "Weights the direction uses"
+            },
+            "fallback": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "license",
+            "source",
+            "weights",
+            "fallback"
+          ],
+          "additionalProperties": false
+        },
+        "body_family": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "license": {
+              "type": "string",
+              "enum": [
+                "OFL-1.1",
+                "Apache-2.0",
+                "UFL-1.0",
+                "MIT"
+              ]
+            },
+            "source": {
+              "type": "string",
+              "enum": [
+                "google-fonts",
+                "fontsource",
+                "bundled"
+              ]
+            },
+            "weights": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 900
+              },
+              "description": "Weights the direction uses"
+            },
+            "fallback": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "license",
+            "source",
+            "weights",
+            "fallback"
+          ],
+          "additionalProperties": false
+        },
+        "mono_family": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "license": {
+              "type": "string",
+              "enum": [
+                "OFL-1.1",
+                "Apache-2.0",
+                "UFL-1.0",
+                "MIT"
+              ]
+            },
+            "source": {
+              "type": "string",
+              "enum": [
+                "google-fonts",
+                "fontsource",
+                "bundled"
+              ]
+            },
+            "weights": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 900
+              },
+              "description": "Weights the direction uses"
+            },
+            "fallback": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "license",
+            "source",
+            "weights",
+            "fallback"
+          ],
+          "additionalProperties": false
+        },
+        "scale": {
+          "type": "object",
+          "properties": {
+            "display": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 120,
+                  "description": "px on web (base 16), sp on Android"
+                },
+                "weight": {
+                  "type": "integer",
+                  "minimum": 100,
+                  "maximum": 900
+                },
+                "line_height": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 160,
+                  "description": "Absolute line height, same unit as size"
+                },
+                "letter_spacing": {
+                  "type": "number",
+                  "minimum": -0.1,
+                  "maximum": 0.2,
+                  "description": "em"
+                },
+                "family": {
+                  "description": "Defaults: display/headline use display, others use body",
+                  "type": "string",
+                  "enum": [
+                    "display",
+                    "body",
+                    "mono"
+                  ]
+                }
+              },
+              "required": [
+                "size",
+                "weight",
+                "line_height",
+                "letter_spacing"
+              ],
+              "additionalProperties": false
+            },
+            "headline": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 120,
+                  "description": "px on web (base 16), sp on Android"
+                },
+                "weight": {
+                  "type": "integer",
+                  "minimum": 100,
+                  "maximum": 900
+                },
+                "line_height": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 160,
+                  "description": "Absolute line height, same unit as size"
+                },
+                "letter_spacing": {
+                  "type": "number",
+                  "minimum": -0.1,
+                  "maximum": 0.2,
+                  "description": "em"
+                },
+                "family": {
+                  "description": "Defaults: display/headline use display, others use body",
+                  "type": "string",
+                  "enum": [
+                    "display",
+                    "body",
+                    "mono"
+                  ]
+                }
+              },
+              "required": [
+                "size",
+                "weight",
+                "line_height",
+                "letter_spacing"
+              ],
+              "additionalProperties": false
+            },
+            "title": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 120,
+                  "description": "px on web (base 16), sp on Android"
+                },
+                "weight": {
+                  "type": "integer",
+                  "minimum": 100,
+                  "maximum": 900
+                },
+                "line_height": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 160,
+                  "description": "Absolute line height, same unit as size"
+                },
+                "letter_spacing": {
+                  "type": "number",
+                  "minimum": -0.1,
+                  "maximum": 0.2,
+                  "description": "em"
+                },
+                "family": {
+                  "description": "Defaults: display/headline use display, others use body",
+                  "type": "string",
+                  "enum": [
+                    "display",
+                    "body",
+                    "mono"
+                  ]
+                }
+              },
+              "required": [
+                "size",
+                "weight",
+                "line_height",
+                "letter_spacing"
+              ],
+              "additionalProperties": false
+            },
+            "body": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 120,
+                  "description": "px on web (base 16), sp on Android"
+                },
+                "weight": {
+                  "type": "integer",
+                  "minimum": 100,
+                  "maximum": 900
+                },
+                "line_height": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 160,
+                  "description": "Absolute line height, same unit as size"
+                },
+                "letter_spacing": {
+                  "type": "number",
+                  "minimum": -0.1,
+                  "maximum": 0.2,
+                  "description": "em"
+                },
+                "family": {
+                  "description": "Defaults: display/headline use display, others use body",
+                  "type": "string",
+                  "enum": [
+                    "display",
+                    "body",
+                    "mono"
+                  ]
+                }
+              },
+              "required": [
+                "size",
+                "weight",
+                "line_height",
+                "letter_spacing"
+              ],
+              "additionalProperties": false
+            },
+            "body_small": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 120,
+                  "description": "px on web (base 16), sp on Android"
+                },
+                "weight": {
+                  "type": "integer",
+                  "minimum": 100,
+                  "maximum": 900
+                },
+                "line_height": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 160,
+                  "description": "Absolute line height, same unit as size"
+                },
+                "letter_spacing": {
+                  "type": "number",
+                  "minimum": -0.1,
+                  "maximum": 0.2,
+                  "description": "em"
+                },
+                "family": {
+                  "description": "Defaults: display/headline use display, others use body",
+                  "type": "string",
+                  "enum": [
+                    "display",
+                    "body",
+                    "mono"
+                  ]
+                }
+              },
+              "required": [
+                "size",
+                "weight",
+                "line_height",
+                "letter_spacing"
+              ],
+              "additionalProperties": false
+            },
+            "label": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 120,
+                  "description": "px on web (base 16), sp on Android"
+                },
+                "weight": {
+                  "type": "integer",
+                  "minimum": 100,
+                  "maximum": 900
+                },
+                "line_height": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 160,
+                  "description": "Absolute line height, same unit as size"
+                },
+                "letter_spacing": {
+                  "type": "number",
+                  "minimum": -0.1,
+                  "maximum": 0.2,
+                  "description": "em"
+                },
+                "family": {
+                  "description": "Defaults: display/headline use display, others use body",
+                  "type": "string",
+                  "enum": [
+                    "display",
+                    "body",
+                    "mono"
+                  ]
+                }
+              },
+              "required": [
+                "size",
+                "weight",
+                "line_height",
+                "letter_spacing"
+              ],
+              "additionalProperties": false
+            },
+            "caption": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 120,
+                  "description": "px on web (base 16), sp on Android"
+                },
+                "weight": {
+                  "type": "integer",
+                  "minimum": 100,
+                  "maximum": 900
+                },
+                "line_height": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 160,
+                  "description": "Absolute line height, same unit as size"
+                },
+                "letter_spacing": {
+                  "type": "number",
+                  "minimum": -0.1,
+                  "maximum": 0.2,
+                  "description": "em"
+                },
+                "family": {
+                  "description": "Defaults: display/headline use display, others use body",
+                  "type": "string",
+                  "enum": [
+                    "display",
+                    "body",
+                    "mono"
+                  ]
+                }
+              },
+              "required": [
+                "size",
+                "weight",
+                "line_height",
+                "letter_spacing"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "display",
+            "headline",
+            "title",
+            "body",
+            "body_small",
+            "label",
+            "caption"
+          ],
+          "additionalProperties": false
+        },
+        "web_responsive": {
+          "description": "Fluid clamp() range (px) for web display sizes",
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "enum": [
+              "display",
+              "headline",
+              "title",
+              "body",
+              "body_small",
+              "label",
+              "caption"
+            ]
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "number",
+                "minimum": 10
+              },
+              "max": {
+                "type": "number",
+                "maximum": 160
+              }
+            },
+            "required": [
+              "min",
+              "max"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "numerals": {
+          "description": "Default numeral style for data and money values",
+          "type": "string",
+          "enum": [
+            "proportional",
+            "tabular"
+          ]
+        }
+      },
+      "required": [
+        "display_family",
+        "body_family",
+        "scale"
+      ],
+      "additionalProperties": false
+    },
+    "spacing": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 8
+        },
+        "scale": {
+          "minItems": 6,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        }
+      },
+      "required": [
+        "base",
+        "scale"
+      ],
+      "additionalProperties": false
+    },
+    "radius": {
+      "type": "object",
+      "properties": {
+        "sm": {
+          "type": "number",
+          "minimum": 0
+        },
+        "md": {
+          "type": "number",
+          "minimum": 0
+        },
+        "lg": {
+          "type": "number",
+          "minimum": 0
+        },
+        "full": {
+          "type": "number",
+          "minimum": 0
+        },
+        "usage": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "sm",
+        "md",
+        "lg",
+        "full",
+        "usage"
+      ],
+      "additionalProperties": false
+    },
+    "elevation": {
+      "type": "object",
+      "properties": {
+        "style": {
+          "type": "string",
+          "enum": [
+            "borders-first",
+            "soft-shadows",
+            "flat",
+            "outlined-bold"
+          ]
+        },
+        "levels": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "shadow": {
+                "description": "CSS box-shadow value (light theme)",
+                "type": "string"
+              },
+              "shadow_dark": {
+                "description": "CSS box-shadow value (dark theme)",
+                "type": "string"
+              },
+              "elevation_dp": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 24,
+                "description": "Android elevation"
+              }
+            },
+            "required": [
+              "name",
+              "elevation_dp"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "style",
+        "levels"
+      ],
+      "additionalProperties": false
+    },
+    "motion": {
+      "type": "object",
+      "properties": {
+        "duration_ms": {
+          "type": "object",
+          "properties": {
+            "fast": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "base": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "slow": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "fast",
+            "base",
+            "slow"
+          ],
+          "additionalProperties": false
+        },
+        "easing": {
+          "type": "string",
+          "pattern": "^cubic-bezier\\(\\s*-?[\\d.]+\\s*,\\s*-?[\\d.]+\\s*,\\s*-?[\\d.]+\\s*,\\s*-?[\\d.]+\\s*\\)$"
+        },
+        "rules": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "duration_ms",
+        "easing",
+        "rules"
+      ],
+      "additionalProperties": false
+    },
+    "iconography": {
+      "type": "object",
+      "properties": {
+        "style": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recommended_sets": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "never": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "style",
+        "recommended_sets",
+        "never"
+      ],
+      "additionalProperties": false
+    },
+    "components": {
+      "type": "object",
+      "properties": {
+        "button": {
+          "type": "string",
+          "minLength": 1
+        },
+        "card": {
+          "type": "string",
+          "minLength": 1
+        },
+        "input": {
+          "type": "string",
+          "minLength": 1
+        },
+        "list": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "button",
+        "card",
+        "input",
+        "list"
+      ],
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "signature_details": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "avoid": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "permits": {
+      "description": "AI-look patterns this direction deliberately allows. All default to false.",
+      "type": "object",
+      "properties": {
+        "gradients": {
+          "type": "boolean"
+        },
+        "blur": {
+          "type": "boolean"
+        },
+        "shadows_on_cards": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "version",
+    "summary",
+    "best_for",
+    "avoid_for",
+    "mood",
+    "color",
+    "typography",
+    "spacing",
+    "radius",
+    "elevation",
+    "motion",
+    "iconography",
+    "components",
+    "signature_details",
+    "avoid"
+  ],
+  "additionalProperties": false
+}
