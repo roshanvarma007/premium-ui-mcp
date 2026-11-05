@@ -172,3 +172,31 @@ Milestone-by-milestone record of the build (see SPEC.md section 14).
   TypeScript compiler (in a test). Only the TS variants are built in sample apps.
 - CI job `react-next-samples` added.
 - Results: 99/99 tests pass; lint and typecheck pass.
+
+## M6: Android XML (done; on-device visual check not done)
+
+- `android-xml` adapter for Material Components 1.14.0 (Material 3). All attribute and style
+  names were verified against the library's own `R.txt`, not from memory. It generates:
+  - `values/colors.xml` and `values-night/colors.xml`: separately designed palettes, plus
+    `ds_accent_inverse` and `ds_light_system_bars`.
+  - `values/themes.xml`: `Theme.App` (DayNight, Light or Dark parent depending on mode). Every
+    M3 color role is mapped, including the fixed and surface-container roles. All 30 M3
+    text-appearance attributes (including the new *Emphasized* ones) point at the 7 roles, and
+    shape appearances and window/system-bar colors are set. It also has widget styles for
+    MaterialButton (primary and outlined), MaterialCardView (hairline border, no elevation) and
+    TextInputLayout (outlined).
+  - `values/type.xml`: `TextAppearance.App.*` in sp, with lineHeight, letterSpacing and
+    `tnum`; each weight is a separate font resource, so it works on every API level.
+  - `values/dimens.xml` (spacing, radii, elevation, 48dp touch target), `values/shapes.xml`,
+    and `ds_bg_*` shape/ripple drawables for plain views.
+  - Fonts: bundled `res/font` TTFs by default. With `google-fonts`: provider font XML per
+    weight, `font_certs.xml`, `preloaded_fonts` and the manifest meta-data step.
+- Sample `examples/android-xml-sample/`: AppCompatActivity with a Views layout that uses only
+  theme attributes and `ds_*` resources, plus bundled and downloadable flavors.
+  **`./gradlew :app:assembleDebug` succeeds locally for both flavors** (AAPT2 resolves every
+  attribute and parent). CI job `android-xml-sample` added.
+- **Not done:** viewing light and dark on a device. When I tried to boot an emulator, another
+  emulator instance was already running on your machine (likely yours). I did not install
+  anything on it or start a second instance. To check by hand, run
+  `./gradlew :app:installBundledDebug` in that folder and toggle dark theme on the device.
+- Results: 108/108 tests pass; lint and typecheck pass.

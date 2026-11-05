@@ -73,3 +73,18 @@ jobs:
       - name: Next.js sample (App Router + Pages Router + Tailwind)
         working-directory: examples/nextjs-sample
         run: npm ci && npm run build
+
+  android-xml-sample:
+    name: Android XML sample builds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@v4
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Assemble (bundled + downloadable fonts)
+        working-directory: examples/android-xml-sample
+        run: ./gradlew :app:assembleDebug --console=plain

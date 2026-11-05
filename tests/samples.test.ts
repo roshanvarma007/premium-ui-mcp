@@ -76,3 +76,28 @@ describe('examples/nextjs-sample (Next.js + Tailwind, both routers, TypeScript)'
     }
   });
 });
+
+describe('examples/android-xml-sample (Views + Material Components)', () => {
+  const root = '../examples/android-xml-sample';
+  it('bundled-font resources match the generator', async () => {
+    for (const f of gen(['android-xml'], { packageName: 'com.premiumui.xmlsample' })) {
+      await expect(f.content).toMatchFileSnapshot(`${root}/${f.path}`);
+    }
+  });
+  it('downloadable-font resources match the generator (flavor source set)', async () => {
+    const files = gen(['android-xml'], {
+      packageName: 'com.premiumui.xmlsample',
+      fontSource: 'google-fonts',
+    });
+    for (const f of files.filter(
+      (x) =>
+        x.path.includes('/font/') ||
+        x.path.includes('font_certs') ||
+        x.path.includes('preloaded_fonts'),
+    )) {
+      await expect(f.content).toMatchFileSnapshot(
+        `${root}/${f.path.replace('app/src/main/', 'app/src/downloadable/')}`,
+      );
+    }
+  });
+});
