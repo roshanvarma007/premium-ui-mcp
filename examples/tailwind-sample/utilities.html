@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tailwind utilities demo</title>
+    <script>(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
+    <link rel="stylesheet" href="css/output.css">
+  </head>
+  <body class="bg-bg text-text">
+    <!-- Direction utilities: these compile. -->
+    <main class="mx-auto max-w-3xl p-6">
+      <p class="t-label text-text-muted">Available balance</p>
+      <h1 class="t-display font-display">$12,480.56</h1>
+      <p class="text-body text-success tabular-nums">+ $320.10 this month</p>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2">
+        <article class="bg-surface border border-border rounded-md p-4 hover:shadow-overlay">
+          <h2 class="t-title">Savings</h2>
+          <p class="text-body-small text-text-muted">Earns 3.1% a year.</p>
+        </article>
+        <article class="bg-surface border border-border rounded-md p-4">
+          <h2 class="t-title">Card</h2>
+          <button class="mt-4 min-h-touch rounded-md bg-accent px-4 text-on-accent">Freeze card</button>
+        </article>
+      </div>
+      <!-- Off-system classes below must NOT compile (checked by check.mjs). -->
+      <div class="bg-indigo-500 p-5 text-[17px] backdrop-blur-xl bg-linear-to-r from-purple-500"></div>
+    </main>
+  </body>
+</html>
