@@ -3,12 +3,16 @@ import type { Direction } from '../schema/direction.schema.js';
 import { composeAdapter } from './android/compose.js';
 import type { Adapter, AdapterOptions, AdapterOutput, GeneratedFile } from './types.js';
 import { htmlAdapter } from './web/html.js';
+import { nextjsAdapter } from './web/nextjs.js';
+import { reactAdapter } from './web/react.js';
 import { tailwindAdapter } from './web/tailwind.js';
 
 /** Adapters available in this build. Platforms missing here are on the roadmap. */
 export const ADAPTERS: Partial<Record<PlatformId, Adapter>> = {
   html: htmlAdapter,
   tailwind: tailwindAdapter,
+  react: reactAdapter,
+  nextjs: nextjsAdapter,
   compose: composeAdapter,
 };
 

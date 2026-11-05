@@ -65,16 +65,30 @@ function shadowVars(d: Direction, dark: boolean, indent: string): string {
 }
 
 /** Static (mode-independent) tokens: fonts, type scale, spacing, radii, motion. */
-function staticVars(d: Direction, indent: string): string {
+/**
+ * Maps a font family name to a CSS variable holding the real family (for next/font, whose
+ * family names are hashed). Without it the family name is used directly.
+ */
+export type FontVarFor = (familyName: string) => string | undefined;
+
+function stackFor(name: string, fallback: string[], fontVar?: FontVarFor): string {
+  const v = fontVar?.(name);
+  if (!v) return fontStack(name, fallback);
+  return [`var(${v})`, ...fontStack(name, fallback).split(', ').slice(1)].join(', ');
+}
+
+function staticVars(d: Direction, indent: string, fontVar?: FontVarFor): string {
   const t = d.typography;
   const lines: string[] = [];
+  const mono = t.mono_family ?? t.body_family;
   lines.push(`${indent}/* Font families */`);
   lines.push(
-    `${indent}--font-display: ${fontStack(t.display_family.name, t.display_family.fallback)};`,
+    `${indent}--font-display: ${stackFor(t.display_family.name, t.display_family.fallback, fontVar)};`,
   );
-  lines.push(`${indent}--font-body: ${fontStack(t.body_family.name, t.body_family.fallback)};`);
-  const mono = t.mono_family ?? t.body_family;
-  lines.push(`${indent}--font-mono: ${fontStack(mono.name, mono.fallback)};`);
+  lines.push(
+    `${indent}--font-body: ${stackFor(t.body_family.name, t.body_family.fallback, fontVar)};`,
+  );
+  lines.push(`${indent}--font-mono: ${stackFor(mono.name, mono.fallback, fontVar)};`);
 
   lines.push('', `${indent}/* Type scale: size, line height, letter spacing, weight per role */`);
   for (const { role, style } of typeRoles(d)) {
@@ -113,7 +127,11 @@ function staticVars(d: Direction, indent: string): string {
  * tokens.css: light/dark color tokens switched by the data-theme attribute on <html>,
  * with prefers-color-scheme as the no-JavaScript fallback.
  */
-export function tokensCss(d: Direction, o: Pick<AdapterOptions, 'mode'>): string {
+export function tokensCss(
+  d: Direction,
+  o: Pick<AdapterOptions, 'mode'>,
+  fontVar?: FontVarFor,
+): string {
   const light = resolvePalette(d.color.light);
   const dark = resolvePalette(d.color.dark);
   const i1 = '  ';
@@ -126,13 +144,13 @@ export function tokensCss(d: Direction, o: Pick<AdapterOptions, 'mode'>): string
 
   if (o.mode === 'dark') {
     parts.push(
-      `:root {\n${i1}color-scheme: dark;\n${colorVars(dark, i1)}\n${shadowVars(d, true, i1)}\n\n${staticVars(d, i1)}\n}`,
+      `:root {\n${i1}color-scheme: dark;\n${colorVars(dark, i1)}\n${shadowVars(d, true, i1)}\n\n${staticVars(d, i1, fontVar)}\n}`,
     );
     return `${parts.join('\n\n')}\n`;
   }
 
   parts.push(
-    `:root {\n${i1}color-scheme: ${o.mode === 'both' ? 'light dark' : 'light'};\n${colorVars(light, i1)}\n${shadowVars(d, false, i1)}\n\n${staticVars(d, i1)}\n}`,
+    `:root {\n${i1}color-scheme: ${o.mode === 'both' ? 'light dark' : 'light'};\n${colorVars(light, i1)}\n${shadowVars(d, false, i1)}\n\n${staticVars(d, i1, fontVar)}\n}`,
   );
   if (o.mode === 'both') {
     const darkBlock = (indent: string) =>
