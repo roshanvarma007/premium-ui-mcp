@@ -1,6 +1,7 @@
 import type { PlatformId } from '../platforms.js';
 import type { Direction } from '../schema/direction.schema.js';
 import { composeAdapter } from './android/compose.js';
+import { androidXmlAdapter } from './android/xml.js';
 import type { Adapter, AdapterOptions, AdapterOutput, GeneratedFile } from './types.js';
 import { htmlAdapter } from './web/html.js';
 import { nextjsAdapter } from './web/nextjs.js';
@@ -14,6 +15,7 @@ export const ADAPTERS: Partial<Record<PlatformId, Adapter>> = {
   react: reactAdapter,
   nextjs: nextjsAdapter,
   compose: composeAdapter,
+  'android-xml': androidXmlAdapter,
 };
 
 export function supportedPlatforms(): PlatformId[] {
