@@ -134,3 +134,41 @@ Milestone-by-milestone record of the build (see SPEC.md section 14).
   - The render caught a real bug: `padding` shorthand in `.section` and `.hero` wiped out the
     container's side padding. Fixed, and now all content starts at the same edge.
 - Results: 85/85 tests pass; lint and typecheck pass.
+
+## M5: React and Next.js (done)
+
+- `react` adapter (TS or JS, no component library):
+  - `src/theme/` gets tokens.css, fonts.css and base.css (or a Tailwind `src/index.css` when combined).
+  - `tokens.ts` holds CSS-variable references for inline styles and CSS-in-JS, raw palettes for
+    canvas and charts, and `NO_FLASH_SCRIPT`.
+  - `theme.tsx` has `useTheme()` via `useSyncExternalStore` (reads `<html data-theme>`, with a
+    null server snapshot, so hydration never mismatches), plus a `ThemeProvider` that follows
+    system changes until the user chooses.
+  - `ThemeToggle.tsx` and `useReducedMotion.ts`. next_steps cover plain CSS, CSS Modules and Tailwind.
+- `nextjs` adapter (Next.js 16, verified against current docs):
+  - App Router: `app/globals.css`, `app/tokens.css`, `app/fonts.ts` and `app/layout.tsx`.
+    The layout has the `viewport` export for themeColor and colorScheme, `fontVariables` on
+    `<html>`, an inline no-flash `<script>` in `<head>`, and `suppressHydrationWarning` on
+    `<html>` only. Theme modules live in `components/theme/`, and only theme and toggle are
+    `'use client'`. The script constant lives in a server-safe module, because a string
+    exported from a client module would arrive as a client reference.
+  - Fonts: `next/font/local` by default (self-hosted woff2). `next/font/google` is opt-in; it
+    also self-hosts at build time. tokens.css font stacks reference the `--nf-*` variables
+    from next/font.
+  - Pages Router: `pages/_document` (meta and script), `pages/_app` (global CSS, `<style jsx global>`
+    for the font variables) and `styles/`.
+  - With Tailwind: `postcss.config.mjs` plus the Tailwind entry in globals.css.
+- Samples:
+  - `examples/react-sample` (Vite 8.3, React 19.3, TS 7 typecheck): `npm run build` passes.
+  - `examples/nextjs-sample` (Next 16.4.5 + Tailwind 4.3.4, App Router and a Pages Router route
+    in one app): `next build` passes, including type checking. It uses TypeScript 5.9 because
+    that is what create-next-app pins; TS 7 was not tried with Next.
+  - Both are kept in sync with the generators by file snapshots.
+- Browser-verified in `next dev`, which is the mode that reports hydration errors. With a stored
+  dark theme there were **no hydration warnings**. Dark palette, next/font families and toggle
+  state were correct on `/` (App Router) and `/legacy` (Pages Router), and the Pages Router
+  font variables resolve on `:root`.
+- JS variants: snapshot-tested, plus a syntax parse of every generated .js/.jsx with the
+  TypeScript compiler (in a test). Only the TS variants are built in sample apps.
+- CI job `react-next-samples` added.
+- Results: 99/99 tests pass; lint and typecheck pass.

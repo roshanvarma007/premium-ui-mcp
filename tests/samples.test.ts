@@ -55,3 +55,24 @@ describe('examples/tailwind-sample (HTML + Tailwind v4)', () => {
     }
   });
 });
+
+describe('examples/react-sample (Vite + React, TypeScript, plain CSS)', () => {
+  it('matches the generator', async () => {
+    for (const f of gen(['react'], { language: 'ts' })) {
+      await expect(f.content).toMatchFileSnapshot(`../examples/react-sample/${f.path}`);
+    }
+  });
+});
+
+describe('examples/nextjs-sample (Next.js + Tailwind, both routers, TypeScript)', () => {
+  it('App Router output matches the generator', async () => {
+    for (const f of gen(['nextjs', 'tailwind'], { language: 'ts', router: 'app' })) {
+      await expect(f.content).toMatchFileSnapshot(`../examples/nextjs-sample/${f.path}`);
+    }
+  });
+  it('Pages Router output matches the generator', async () => {
+    for (const f of gen(['nextjs', 'tailwind'], { language: 'ts', router: 'pages' })) {
+      await expect(f.content).toMatchFileSnapshot(`../examples/nextjs-sample/${f.path}`);
+    }
+  });
+});
