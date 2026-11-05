@@ -18,7 +18,8 @@ function load(): readonly Direction[] {
     }
     if (seen.has(id)) throw new Error(`Duplicate design direction id "${id}"`);
     seen.add(id);
-    out.push(raw as Direction);
+    const { $schema: _schema, ...direction } = raw as Direction;
+    out.push(direction as Direction);
   }
   return Object.freeze(out.sort((a, b) => a.id.localeCompare(b.id)));
 }

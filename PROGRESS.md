@@ -45,3 +45,23 @@ Milestone-by-milestone record of the build (see SPEC.md section 14).
 - `fintech-trust` authored (light and dark designed separately). All 34 contrast pairs pass,
   and the lowest ratio is border_strong at 3.19:1. **Needs your visual review (M9 preview page).**
 - Results: 31/31 tests pass; lint, typecheck pass.
+
+## M2: MCP server skeleton and read-only tools (done)
+
+- `serveStdio` entry point. Tools are registered in `createServer()` (one file per tool in `src/tools/`):
+  - `get_design_direction`: brief matching in `src/brief/match.ts`. Weighted scoring on
+    best_for, mood, surface and avoid_for. A small stemmer plus a synonym table, no NLP deps.
+    Returns `needs_clarification` with at most 4 questions when there is no positive signal, so it
+    never guesses. Tie-break is by id, so output is deterministic.
+  - `list_directions` (tag filter), `check_contrast` (AA/AAA flags plus hue-preserving suggestions),
+    `get_anti_patterns` (16 entries with platform-specific tells).
+- Resources: `direction://{id}` (listable template) and `rules://anti-patterns`. Prompt: `design_kickoff`.
+- Tests: matching unit tests; every tool, resource and prompt through an in-memory MCP client;
+  an end-to-end stdio test that spawns `dist/index.js` with the real SDK client and checks that
+  every stdout line is JSON-RPC. CI now builds before testing so the stdio test always runs there.
+- Manually verified with the official MCP Inspector CLI (`tools/call get_design_direction`).
+- Results: 53/53 tests pass; lint, typecheck, build pass.
+- Uncertain: matching quality can only really be judged once more directions exist (M9).
+  With one direction, alternates are always empty.
+- Not done: registering the server in your Claude Code config (`claude mcp add`). That changes
+  your user settings, so I left it for you.
