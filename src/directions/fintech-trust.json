@@ -1,0 +1,164 @@
+{
+  "$schema": "../schema/direction.schema.json",
+  "id": "fintech-trust",
+  "name": "Fintech Trust",
+  "version": 1,
+  "summary": "Calm, credible, precise. Warm neutral surfaces, ink text, one restrained deep-green accent and tabular numbers everywhere money appears.",
+  "best_for": [
+    "banking",
+    "payments",
+    "investing",
+    "insurance",
+    "accounting",
+    "budgeting",
+    "wallet",
+    "lending",
+    "tax",
+    "payroll",
+    "finance"
+  ],
+  "avoid_for": ["kids games", "nightlife", "streetwear", "casual games", "entertainment"],
+  "mood": ["trustworthy", "calm", "precise", "credible", "professional", "serious"],
+  "color": {
+    "light": {
+      "bg": "#F7F6F3",
+      "surface": "#FFFFFF",
+      "surface_alt": "#F0EEE9",
+      "text": "#16181D",
+      "text_muted": "#5F636A",
+      "border": "#E4E1DA",
+      "border_strong": "#8C8A84",
+      "accent": "#0F6B4F",
+      "on_accent": "#FFFFFF",
+      "success": "#1F7A3D",
+      "warning": "#975700",
+      "error": "#B3261E"
+    },
+    "dark": {
+      "bg": "#111314",
+      "surface": "#181B1C",
+      "surface_alt": "#202425",
+      "text": "#ECEAE4",
+      "text_muted": "#A3A7A6",
+      "border": "#2A2F30",
+      "border_strong": "#666C6B",
+      "accent": "#5CC49B",
+      "on_accent": "#08201A",
+      "success": "#6BCB86",
+      "warning": "#E6A955",
+      "error": "#F28B82"
+    }
+  },
+  "typography": {
+    "display_family": {
+      "name": "Fraunces",
+      "license": "OFL-1.1",
+      "source": "google-fonts",
+      "weights": [600],
+      "fallback": ["Georgia", "Times New Roman", "serif"],
+      "notes": "Variable font. Keep the SOFT axis at 0 and WONK at 0 for a serious, upright display face."
+    },
+    "body_family": {
+      "name": "Manrope",
+      "license": "OFL-1.1",
+      "source": "google-fonts",
+      "weights": [400, 500, 600],
+      "fallback": ["system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
+      "notes": "Supports tabular figures (font-feature-settings: \"tnum\")."
+    },
+    "mono_family": {
+      "name": "JetBrains Mono",
+      "license": "OFL-1.1",
+      "source": "google-fonts",
+      "weights": [400],
+      "fallback": ["ui-monospace", "SFMono-Regular", "Consolas", "monospace"]
+    },
+    "scale": {
+      "display": { "size": 40, "weight": 600, "line_height": 48, "letter_spacing": -0.02 },
+      "headline": { "size": 28, "weight": 600, "line_height": 36, "letter_spacing": -0.01 },
+      "title": { "size": 18, "weight": 600, "line_height": 24, "letter_spacing": 0 },
+      "body": { "size": 16, "weight": 400, "line_height": 24, "letter_spacing": 0 },
+      "body_small": { "size": 14, "weight": 400, "line_height": 20, "letter_spacing": 0 },
+      "label": { "size": 12, "weight": 500, "line_height": 16, "letter_spacing": 0.02 },
+      "caption": { "size": 12, "weight": 400, "line_height": 16, "letter_spacing": 0.01 }
+    },
+    "web_responsive": {
+      "display": { "min": 32, "max": 56 },
+      "headline": { "min": 24, "max": 36 }
+    },
+    "numerals": "tabular"
+  },
+  "spacing": { "base": 4, "scale": [0, 4, 8, 12, 16, 24, 32, 48, 64, 96] },
+  "radius": {
+    "sm": 6,
+    "md": 12,
+    "lg": 16,
+    "full": 999,
+    "usage": "Buttons and inputs md, cards md, sheets and dialogs lg, chips and avatars full. Never mix more than 3 radii on one screen."
+  },
+  "elevation": {
+    "style": "borders-first",
+    "levels": [
+      { "name": "none", "elevation_dp": 0 },
+      {
+        "name": "raised",
+        "shadow": "0 1px 2px rgba(22, 24, 29, 0.06)",
+        "shadow_dark": "0 1px 2px rgba(0, 0, 0, 0.4)",
+        "elevation_dp": 1
+      },
+      {
+        "name": "overlay",
+        "shadow": "0 8px 24px rgba(22, 24, 29, 0.12)",
+        "shadow_dark": "0 8px 24px rgba(0, 0, 0, 0.5)",
+        "elevation_dp": 6
+      }
+    ]
+  },
+  "motion": {
+    "duration_ms": { "fast": 120, "base": 200, "slow": 320 },
+    "easing": "cubic-bezier(0.2, 0, 0, 1)",
+    "rules": [
+      "Animate opacity and transform only",
+      "No bounce or overshoot on financial data",
+      "Numbers update instantly; never count up balances",
+      "Respect reduced-motion: replace movement with a short fade"
+    ]
+  },
+  "iconography": {
+    "style": "Outline, 1.5px stroke, rounded caps, 24px grid",
+    "recommended_sets": ["Lucide", "Material Symbols (Outlined, weight 300)"],
+    "never": [
+      "emoji as icons",
+      "mixed icon styles",
+      "filled and outline icons on one screen",
+      "3D or gradient icons"
+    ]
+  },
+  "components": {
+    "button": "Primary: solid accent, on_accent label, 48dp / 44px min height, md radius, label weight 600. Secondary: 1px border_strong outline, text color label. Tertiary: text only in accent. Max one primary per view.",
+    "card": "Surface fill, 1px border, md radius, no shadow unless the whole card is interactive (then raised on hover/press).",
+    "input": "Surface fill with 1px border_strong, md radius, 48dp / 44px min height, visible label above the field always. Never placeholder-only labels. Errors in error color below the field with an icon.",
+    "list": "Rows separated by hairline border dividers and spacing, not boxed rows. Amounts right-aligned with tabular numerals.",
+    "amount": "Money uses tabular numerals, the currency symbol in text_muted, and the sign shown explicitly. Positive amounts are not colored green unless they represent a gain.",
+    "navigation": "Mobile: bottom bar with 3 to 5 destinations, outline icons, labels always visible. Web: top bar with plain text links and one primary action."
+  },
+  "signature_details": [
+    "Tabular numerals for all money values",
+    "Hairline dividers instead of boxes",
+    "Serif display only for page titles and hero balances; everything else in the sans",
+    "Generous top-of-screen whitespace before the key number",
+    "Muted currency symbols and decimals so the integer part leads"
+  ],
+  "avoid": [
+    "gradients",
+    "blur / glassmorphism",
+    "glow shadows",
+    "more than one accent color",
+    "pure #000 on pure #FFF",
+    "default Material purple",
+    "navy and cyan combinations",
+    "red and green as the only signal (pair with signs and icons)",
+    "animated counters on balances",
+    "stock photos of handshakes or coins"
+  ]
+}
