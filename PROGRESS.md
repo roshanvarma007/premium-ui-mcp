@@ -97,3 +97,40 @@ Milestone-by-milestone record of the build (see SPEC.md section 14).
     `JAVA_TOOL_OPTIONS=-Djdk.net.unixdomain.tmpdir=C:\Windows\Temp`.
     This does not affect CI or users. The build also had to run outside the tool sandbox.
 - Results: 69/69 tests pass (including snapshots); lint and typecheck pass.
+
+## M4: Web core, html + tailwind (done)
+
+- `src/adapters/web/tokens.ts` is the single token generator for the web family. CSS variables
+  use **Tailwind v4 namespace names** (`--color-*`, `--font-*`, `--text-*` with `--line-height` /
+  `--letter-spacing` / `--font-weight` companions, `--spacing-N`, `--radius-*`, `--shadow-*`,
+  `--ease-*`), so plain CSS and Tailwind share one `tokens.css`. Fluid `clamp()` sizes come from
+  `web_responsive` (min at 360px, max at 1280px). Dark mode is set by `<html data-theme>`, with
+  `prefers-color-scheme` as the no-JS fallback.
+- `html` adapter: tokens.css, fonts.css (self-hosted woff2, `font-display: swap`), base.css
+  (reset, role classes `.t-*`, focus-visible, reduced motion, token-only components),
+  theme.js (toggle, localStorage, follows the system when there is no choice, keeps `aria-pressed`
+  in sync), and index.html. The page follows the landing blueprint with copy guidance, uses no
+  inline styles, and puts the no-flash snippet first in `<head>`. The Google Fonts `<link>` is
+  only emitted with `font_source: "google-fonts"`.
+- `tailwind` adapter (v4.3, CSS-first `@theme`) resets the color, font, text, spacing, radius,
+  shadow, ease and blur namespaces, so only direction tokens exist. The default palette,
+  off-grid spacing and blur never compile. It adds `@custom-variant dark` on `data-theme`,
+  `@utility t-<role>` shortcuts, and `min-h-touch` / `size-touch` (44px).
+- Verified empirically with the real Tailwind 4.3.4 CLI rather than only the docs. Explicit
+  `--spacing-*` values after `--spacing-*: initial` work, and `p-5` is not generated.
+  **Limitation found:** arbitrary values (`text-[17px]`, `bg-[#...]`) and gradient direction
+  utilities still compile in Tailwind. No theme config can block them, so `review_ui` (M7)
+  must flag them.
+- Samples:
+  - `examples/web-sample/` (plain HTML) and `examples/tailwind-sample/` (HTML + Tailwind).
+    Both are kept in sync with the generator by file snapshots. Latin woff2 subsets and OFL
+    texts are included.
+  - The Tailwind sample has `npm run check`. It builds with the CLI, asserts which utilities
+    exist and which don't, and parses every generated stylesheet with Lightning CSS (strict).
+    It passes locally, and a CI job `web-samples` was added.
+- Rendered in the browser pane from a local static server:
+  - Light and dark show the correct palette and the self-hosted fonts load.
+  - The theme is set before the stylesheets (no flash), and the toggle works.
+  - The render caught a real bug: `padding` shorthand in `.section` and `.hero` wiped out the
+    container's side padding. Fixed, and now all content starts at the same edge.
+- Results: 85/85 tests pass; lint and typecheck pass.

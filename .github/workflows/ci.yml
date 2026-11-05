@@ -44,3 +44,15 @@ jobs:
       - name: Assemble (bundled + downloadable fonts)
         working-directory: examples/compose-sample
         run: ./gradlew :app:assembleDebug --console=plain
+
+  web-samples:
+    name: Web samples (Tailwind build + CSS parse)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Build Tailwind sample and validate generated CSS
+        working-directory: examples/tailwind-sample
+        run: npm ci && npm run check

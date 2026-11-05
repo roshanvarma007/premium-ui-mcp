@@ -39,3 +39,19 @@ describe('examples/compose-sample', () => {
     );
   });
 });
+
+describe('examples/web-sample (plain HTML)', () => {
+  it('matches the generator', async () => {
+    for (const f of gen(['html'], {})) {
+      await expect(f.content).toMatchFileSnapshot(`../examples/web-sample/${f.path}`);
+    }
+  });
+});
+
+describe('examples/tailwind-sample (HTML + Tailwind v4)', () => {
+  it('matches the generator', async () => {
+    for (const f of gen(['html', 'tailwind'], {})) {
+      await expect(f.content).toMatchFileSnapshot(`../examples/tailwind-sample/${f.path}`);
+    }
+  });
+});
