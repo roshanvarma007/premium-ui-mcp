@@ -5,6 +5,7 @@ import { PlatformSchema } from './platforms.js';
 import { registerCheckContrast } from './tools/check-contrast.js';
 import { antiPatternsText, registerGetAntiPatterns } from './tools/get-anti-patterns.js';
 import { registerGetDesignDirection } from './tools/get-design-direction.js';
+import { registerGetThemeCode } from './tools/get-theme-code.js';
 import { registerListDirections } from './tools/list-directions.js';
 import { SERVER_NAME, SERVER_VERSION } from './version.js';
 
@@ -16,6 +17,7 @@ export function createServer(): McpServer {
   const server = new McpServer({ name: SERVER_NAME, version: SERVER_VERSION });
 
   registerGetDesignDirection(server);
+  registerGetThemeCode(server);
   registerListDirections(server);
   registerCheckContrast(server);
   registerGetAntiPatterns(server);
