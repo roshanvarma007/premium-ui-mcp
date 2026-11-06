@@ -288,3 +288,19 @@ Milestone-by-milestone record of the build (see SPEC.md section 14).
   (the Skill is now included).
 - This branch (`m9-skill-preview`) is committed but **not merged into main**, because M9 is
   incomplete until you approve the direction.
+
+### M9 follow-up: success-green options on the preview page
+
+- Added `--compare` mode to the preview generator (`npm run preview:compare`). It reads
+  `examples/previews/variants/fintech-trust.json`, applies each option's color overrides to a copy
+  of the direction, **validates it against the same WCAG rules as shipped directions** (it refuses
+  to render an invalid option), and writes `examples/previews/fintech-trust-compare.html`.
+  The page shows a 2×2 grid (A and B, each in light and dark) plus a table with hue gap and
+  contrast numbers, with the current palette for reference.
+- Option A (yellower success): success #4F7312 light / #AFCB6E dark. Hue gap to the accent
+  16° → 37° (light), 14° → 42° (dark).
+- Option B (ink-blue accent, green only for success): accent #2E4A6B light / #93AFD3 dark,
+  on_accent #FFFFFF / #0D1726. Hue gap 103° (light), 104° (dark). Accent contrast on bg
+  8.41:1 / 8.26:1.
+- Neither option is applied to `src/directions/fintech-trust.json` yet; the shipped direction is
+  unchanged until you choose.

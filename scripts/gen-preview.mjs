@@ -1,14 +1,24 @@
 // Generates a self-contained preview page for a design direction, for human visual review.
 // Usage: npm run preview -- <direction-id>   (writes examples/previews/<id>.html)
 // Light and dark are rendered side by side from the direction data, with self-hosted fonts.
-import { copyFileSync, existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from 'node:fs';
+import { parseHex, rgbToOklch } from '../dist/a11y/color.js';
 import { contrastHex, floorRatio } from '../dist/a11y/contrast.js';
 import { resolvePalette, spacingTokens, typeRoles } from '../dist/adapters/model.js';
 import { fluid, fontFaceCss, rem, webFontFiles } from '../dist/adapters/web/tokens.js';
 import { getDirection, getDirections } from '../dist/directions/index.js';
-import { contrastReport } from '../dist/directions/validate.js';
+import { contrastReport, validateDirection } from '../dist/directions/validate.js';
 
-const id = process.argv[2] ?? 'fintech-trust';
+const args = process.argv.slice(2);
+const compare = args.includes('--compare');
+const id = args.find((a) => !a.startsWith('--')) ?? 'fintech-trust';
 const d = getDirection(id);
 if (!d) {
   console.error(
@@ -35,9 +45,9 @@ for (const n of readdirSync(sourceFonts))
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const kebab = (s) => s.replace(/_/g, '-');
 
-function paletteVars(mode) {
-  const p = resolvePalette(d.color[mode]);
-  const shadows = d.elevation.levels
+function paletteVars(mode, dir = d) {
+  const p = resolvePalette(dir.color[mode]);
+  const shadows = dir.elevation.levels
     .filter((l) => l.shadow)
     .map(
       (l) =>
@@ -273,7 +283,129 @@ ${fontFaceCss(d, './fonts/').replace(/\/\*[\s\S]*?\*\/\n\n/, '')}
 </html>
 `;
 
-writeFileSync(new URL(`${id}.html`, outDir), html);
+if (!compare) {
+  writeFileSync(new URL(`${id}.html`, outDir), html);
+  console.log(
+    `wrote examples/previews/${id}.html${missingFonts.length ? ` (missing fonts: ${missingFonts.join(', ')})` : ''}`,
+  );
+  process.exit(0);
+}
+
+// ---------------------------------------------------------------------------
+// Compare mode: render the options in previews/variants/<id>.json side by side.
+// Each option overrides some palette colors; every option is validated against the same
+// WCAG rules as shipped directions before it is shown.
+// ---------------------------------------------------------------------------
+const variantFile = new URL(`./variants/${id}.json`, outDir);
+if (!existsSync(variantFile)) {
+  console.error(`No variants file: examples/previews/variants/${id}.json`);
+  process.exit(1);
+}
+const spec = JSON.parse(readFileSync(variantFile, 'utf8'));
+const options = spec.options.map((o) => {
+  const dir = structuredClone(d);
+  for (const mode of ['light', 'dark']) Object.assign(dir.color[mode], o.color?.[mode] ?? {});
+  const issues = validateDirection(dir);
+  return { ...o, dir, issues };
+});
+const invalid = options.filter((o) => o.issues.length > 0);
+if (invalid.length > 0) {
+  for (const o of invalid)
+    console.error(`${o.key} is invalid: ${o.issues.map((i) => i.message).join('; ')}`);
+  process.exit(1);
+}
+
+const hueOf = (hex) => rgbToOklch(parseHex(hex)).h;
+const hueGap = (a, b) => {
+  const g = Math.abs(hueOf(a) - hueOf(b)) % 360;
+  return Math.round(g > 180 ? 360 - g : g);
+};
+
+function optionPanel(o, mode) {
+  const p = resolvePalette(o.dir.color[mode]);
+  const gap = hueGap(p.accent, p.success);
+  const ratio = (a, b) => floorRatio(contrastHex(a, b));
+  return `
+<section class="panel" style="${paletteVars(mode, o.dir)}" aria-label="Option ${o.key}, ${mode} theme">
+  <header class="panel-head"><span class="t-label">Option ${o.key} · ${mode === 'light' ? 'Light' : 'Dark'}</span><span class="t-caption muted mono">accent ${p.accent} · success ${p.success}</span></header>
+  <p class="t-label muted">Available balance</p>
+  <p class="t-display num"><span class="muted">$</span>12,480<span class="muted">.56</span></p>
+  <p class="t-body-small" style="color: var(--color-success)">+ $320.10 this month</p>
+  <div class="row gap-3 mt-6 wrap">
+    <button class="btn btn-primary" type="button">Send money</button>
+    <button class="btn btn-secondary" type="button">Request</button>
+    <button class="btn btn-text" type="button">View statements</button>
+  </div>
+  <ul class="list card mt-8">
+    <li><span><span class="t-body">Northside Grocers</span><span class="t-caption muted block">Today, 09:41</span></span><span class="t-body num">− $48.20</span></li>
+    <li><span><span class="t-body">Salary · Halden &amp; Co.</span><span class="t-caption muted block">Yesterday · Transfer</span></span><span class="t-body num" style="color: var(--color-success)">+ $3,250.00</span></li>
+    <li><span><span class="t-body">Interest paid</span><span class="t-caption muted block">1 Nov · Savings</span></span><span class="t-body num" style="color: var(--color-success)">+ $11.04</span></li>
+  </ul>
+  <div class="row gap-3 mt-6 wrap">
+    <span class="badge" style="color: var(--color-success)">● Paid</span>
+    <span class="badge" style="color: var(--color-warning)">● Due soon</span>
+    <span class="badge" style="color: var(--color-error)">● Overdue</span>
+  </div>
+  <div class="pair mt-8">
+    <div><span class="chip" style="background:${p.accent}"></span><span class="t-label">accent</span><span class="t-caption muted mono">${p.accent} · ${ratio(p.accent, p.bg)}:1 on bg</span></div>
+    <div><span class="chip" style="background:${p.success}"></span><span class="t-label">success</span><span class="t-caption muted mono">${p.success} · ${ratio(p.success, p.bg)}:1 on bg</span></div>
+    <div><span class="t-label">hue gap</span><span class="t-headline num">${gap}°</span><span class="t-caption muted">accent vs success (OKLCH)</span></div>
+  </div>
+</section>`;
+}
+
+const summaryRows = ['light', 'dark']
+  .flatMap((mode) => [
+    { label: 'Current', dir: d, mode },
+    ...options.map((o) => ({ label: `Option ${o.key}`, dir: o.dir, mode })),
+  ])
+  .map(({ label, dir, mode }) => {
+    const p = dir.color[mode];
+    return `<tr><td>${mode}</td><td>${label}</td><td class="mono"><span class="dot" style="background:${p.accent}"></span>${p.accent}</td><td class="mono"><span class="dot" style="background:${p.success}"></span>${p.success}</td><td class="num">${hueGap(p.accent, p.success)}°</td><td class="num">${floorRatio(contrastHex(p.accent, p.bg))}:1</td><td class="num">${floorRatio(contrastHex(p.success, p.bg))}:1</td><td class="num">${floorRatio(contrastHex(p.on_accent, p.accent))}:1</td></tr>`;
+  })
+  .join('');
+
+const style = html.match(/<style>[\s\S]*?<\/style>/)[0].replace(
+  '</style>',
+  `  .compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; padding: 8px 32px 32px; max-width: 1400px; margin: 0 auto; }
+  @media (max-width: 900px) { .compare { grid-template-columns: 1fr; } }
+  .compare-label { max-width: 1400px; margin: 0 auto; padding: 8px 32px 0; }
+  .pair { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-4); padding-top: var(--spacing-6); border-top: 1px solid var(--color-border); }
+  .pair > div { display: grid; gap: 2px; align-content: start; }
+  .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; border: 1px solid rgba(0,0,0,.25); }
+  .opt-desc { max-width: 1400px; margin: 0 auto; padding: 0 32px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  @media (max-width: 900px) { .opt-desc { grid-template-columns: 1fr; } }
+</style>`,
+);
+
+const compareHtml = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(d.name)}: options compared</title>
+${style}
+</head>
+<body>
+  <header class="page-head">
+    <p class="t-label" style="color:#6B6F76">premium-ui-mcp · direction options · pick one</p>
+    <h1 class="t-headline" style="font-family: var(--font-display); margin-top: 8px">${esc(d.name)}: ${esc(spec.question)}</h1>
+    <p class="t-caption" style="margin-top:8px;color:#6B6F76">Both options pass the same WCAG AA contrast checks as the shipped direction. Everything except the colors named below is identical.</p>
+  </header>
+  <div class="opt-desc">${options.map((o) => `<p class="t-body-small"><strong>${esc(o.name)}.</strong> ${esc(o.description)}</p>`).join('')}</div>
+  <div class="compare mt-6">
+    ${['light', 'dark'].map((mode) => options.map((o) => optionPanel(o, mode)).join('')).join('')}
+  </div>
+  <div class="meta">
+    <section style="grid-column: 1 / -1">
+      <h2 class="t-title">Accent and success, side by side (current shown for reference)</h2>
+      <table style="margin-top:12px"><thead><tr><th>Mode</th><th></th><th>Accent</th><th>Success</th><th>Hue gap</th><th>Accent on bg</th><th>Success on bg</th><th>On-accent on accent</th></tr></thead><tbody>${summaryRows}</tbody></table>
+    </section>
+  </div>
+</body>
+</html>
+`;
+writeFileSync(new URL(`${id}-compare.html`, outDir), compareHtml);
 console.log(
-  `wrote examples/previews/${id}.html${missingFonts.length ? ` (missing fonts: ${missingFonts.join(', ')})` : ''}`,
+  `wrote examples/previews/${id}-compare.html (options: ${options.map((o) => o.key).join(', ')})`,
 );

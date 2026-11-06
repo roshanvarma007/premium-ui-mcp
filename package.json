@@ -48,7 +48,8 @@
     "prepublishOnly": "npm run lint && npm run typecheck && npm test && npm run build",
     "gen:schema": "npm run build && node scripts/gen-schema.mjs",
     "gen:samples": "vitest run tests/samples.test.ts -u",
-    "preview": "npm run build && node scripts/gen-preview.mjs"
+    "preview": "npm run build && node scripts/gen-preview.mjs",
+    "preview:compare": "npm run build && node scripts/gen-preview.mjs fintech-trust --compare"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "^2.4.0",

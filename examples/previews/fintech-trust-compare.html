@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fintech Trust: options compared</title>
+<style>
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./fonts/fraunces-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/manrope-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./fonts/manrope-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./fonts/manrope-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/jetbrains-mono-400.woff2") format("woff2");
+}
+
+  :root {
+    --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+    --font-body: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+    --text-display: clamp(2rem, 1.413rem + 2.6087vw, 3.5rem); --lh-display: 1.2000; --ls-display: -0.02em; --fw-display: 600;
+    --text-headline: clamp(1.5rem, 1.2065rem + 1.3043vw, 2.25rem); --lh-headline: 1.2857; --ls-headline: -0.01em; --fw-headline: 600;
+    --text-title: 1.125rem; --lh-title: 1.3333; --ls-title: 0em; --fw-title: 600;
+    --text-body: 1rem; --lh-body: 1.5000; --ls-body: 0em; --fw-body: 400;
+    --text-body-small: 0.875rem; --lh-body-small: 1.4286; --ls-body-small: 0em; --fw-body-small: 400;
+    --text-label: 0.75rem; --lh-label: 1.3333; --ls-label: 0.02em; --fw-label: 500;
+    --text-caption: 0.75rem; --lh-caption: 1.3333; --ls-caption: 0.01em; --fw-caption: 400;
+    --radius-sm: 0.375rem; --radius-md: 0.75rem; --radius-lg: 1rem;
+    --spacing-0: 0; --spacing-1: 0.25rem; --spacing-2: 0.5rem; --spacing-3: 0.75rem; --spacing-4: 1rem; --spacing-6: 1.5rem; --spacing-8: 2rem; --spacing-12: 3rem; --spacing-16: 4rem; --spacing-24: 6rem;
+    --ease: cubic-bezier(0.2, 0, 0, 1); --fast: 120ms;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: var(--font-body); background: #E9E8E4; color: #16181D; -webkit-font-smoothing: antialiased; }
+  .t-display { font-family: var(--font-display); font-size: var(--text-display); line-height: var(--lh-display); letter-spacing: var(--ls-display); font-weight: var(--fw-display); }
+  .t-headline { font-family: var(--font-display); font-size: var(--text-headline); line-height: var(--lh-headline); letter-spacing: var(--ls-headline); font-weight: var(--fw-headline); }
+  .t-title { font-family: var(--font-body); font-size: var(--text-title); line-height: var(--lh-title); letter-spacing: var(--ls-title); font-weight: var(--fw-title); }
+  .t-body { font-family: var(--font-body); font-size: var(--text-body); line-height: var(--lh-body); letter-spacing: var(--ls-body); font-weight: var(--fw-body); }
+  .t-body-small { font-family: var(--font-body); font-size: var(--text-body-small); line-height: var(--lh-body-small); letter-spacing: var(--ls-body-small); font-weight: var(--fw-body-small); }
+  .t-label { font-family: var(--font-body); font-size: var(--text-label); line-height: var(--lh-label); letter-spacing: var(--ls-label); font-weight: var(--fw-label); }
+  .t-caption { font-family: var(--font-body); font-size: var(--text-caption); line-height: var(--lh-caption); letter-spacing: var(--ls-caption); font-weight: var(--fw-caption); }
+  .page-head { padding: 32px 32px 16px; max-width: 1400px; margin: 0 auto; }
+  .page-head p { max-width: 70ch; }
+  .panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 24px; padding: 16px 32px 32px; max-width: 1400px; margin: 0 auto; }
+  .panel { background: var(--color-bg); color: var(--color-text); border-radius: 16px; padding: var(--spacing-8); font-variant-numeric: tabular-nums; }
+  .panel-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-bottom: var(--spacing-4); border-bottom: 1px solid var(--color-border); margin-bottom: var(--spacing-8); }
+  .muted { color: var(--color-text-muted); }
+  .mono { font-family: var(--font-mono); }
+  .num { font-variant-numeric: tabular-nums; }
+  .block { display: block; }
+  .row { display: flex; align-items: center; } .wrap { flex-wrap: wrap; }
+  .gap-2 { gap: var(--spacing-2); } .gap-3 { gap: var(--spacing-3); } .gap-4 { gap: var(--spacing-4); }
+  .mt-2 { margin-top: var(--spacing-2); } .mt-3 { margin-top: var(--spacing-3); } .mt-4 { margin-top: var(--spacing-4); } .mt-6 { margin-top: var(--spacing-6); } .mt-8 { margin-top: var(--spacing-8); } .mt-12 { margin-top: var(--spacing-12); }
+  .hero .t-display { margin-top: var(--spacing-2); }
+  .btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--spacing-4); border-radius: var(--radius-md); border: 1px solid transparent; font: inherit; font-size: var(--text-body-small); font-weight: var(--fw-title); cursor: pointer; transition: background-color var(--fast) var(--ease); }
+  .btn-primary { background: var(--color-accent); color: var(--color-on-accent); }
+  .btn-primary:hover { background: color-mix(in srgb, var(--color-accent) 88%, var(--color-text)); }
+  .btn-secondary { background: transparent; color: var(--color-text); border-color: var(--color-border-strong); }
+  .btn-text { background: transparent; color: var(--color-link); padding: 0 var(--spacing-2); }
+  .btn:focus-visible, .input:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-4); }
+  .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-6); }
+  .card-interactive { box-shadow: var(--shadow-raised); }
+  .list { list-style: none; padding: 0; }
+  .list li { display: flex; justify-content: space-between; align-items: center; gap: var(--spacing-4); padding: var(--spacing-4) 0; }
+  .list li + li { border-top: 1px solid var(--color-border); }
+  .list.card { padding: 0 var(--spacing-6); }
+  .field { display: grid; gap: var(--spacing-2); }
+  .input { min-height: 44px; padding: 0 var(--spacing-3); border-radius: var(--radius-md); border: 1px solid var(--color-border-strong); background: var(--color-surface); color: var(--color-text); font: inherit; }
+  .input-error { border-color: var(--color-error); }
+  .badge { display: inline-flex; gap: 6px; align-items: center; font-size: var(--text-label); font-weight: var(--fw-label); padding: 4px 10px; border-radius: 999px; background: var(--color-surface-alt); }
+  .swatches { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--spacing-3); }
+  .swatch { display: grid; gap: 2px; }
+  .chip { height: 44px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); }
+  .type-row { display: grid; gap: 4px; padding: var(--spacing-3) 0; border-bottom: 1px solid var(--color-border); }
+  .space { height: 16px; background: var(--color-accent); border-radius: 2px; opacity: .8; }
+  .radius { width: 96px; height: 64px; display: grid; place-items: center; background: var(--color-surface); border: 1px solid var(--color-border-strong); }
+  .elev { border-color: var(--color-border); border-radius: var(--radius-md); }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid #D8D6D0; }
+  .meta { max-width: 1400px; margin: 0 auto; padding: 0 32px 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 24px; }
+  .meta section { background: #FFFFFF; border-radius: 12px; padding: 24px; }
+  .meta ul { padding-left: 18px; } .meta li { margin: 4px 0; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  .compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; padding: 8px 32px 32px; max-width: 1400px; margin: 0 auto; }
+  @media (max-width: 900px) { .compare { grid-template-columns: 1fr; } }
+  .compare-label { max-width: 1400px; margin: 0 auto; padding: 8px 32px 0; }
+  .pair { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-4); padding-top: var(--spacing-6); border-top: 1px solid var(--color-border); }
+  .pair > div { display: grid; gap: 2px; align-content: start; }
+  .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; border: 1px solid rgba(0,0,0,.25); }
+  .opt-desc { max-width: 1400px; margin: 0 auto; padding: 0 32px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  @media (max-width: 900px) { .opt-desc { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+  <header class="page-head">
+    <p class="t-label" style="color:#6B6F76">premium-ui-mcp · direction options · pick one</p>
+    <h1 class="t-headline" style="font-family: var(--font-display); margin-top: 8px">Fintech Trust: Success green is close to the accent green. Which fix?</h1>
+    <p class="t-caption" style="margin-top:8px;color:#6B6F76">Both options pass the same WCAG AA contrast checks as the shipped direction. Everything except the colors named below is identical.</p>
+  </header>
+  <div class="opt-desc"><p class="t-body-small"><strong>Option A: yellower success green.</strong> Keep the deep-green accent. Move success toward olive so positive amounts read differently from actions (hue gap about 15° becomes about 40°).</p><p class="t-body-small"><strong>Option B: muted ink-blue accent, green only for success.</strong> Accent becomes a desaturated ink-blue (not navy: lightness 0.40 light / 0.75 dark, low chroma). Green is reserved for success and gains (hue gap about 100°).</p></div>
+  <div class="compare mt-6">
+    
+<section class="panel" style="--color-bg: #F7F6F3; --color-surface: #FFFFFF; --color-surface-alt: #F0EEE9; --color-text: #16181D; --color-text-muted: #5F636A; --color-border: #E4E1DA; --color-border-strong: #8C8A84; --color-accent: #0F6B4F; --color-on-accent: #FFFFFF; --color-success: #4F7312; --color-warning: #975700; --color-error: #B3261E; --color-link: #0F6B4F; --color-on-error: #FFFFFF; --color-on-success: #FFFFFF; --color-on-warning: #FFFFFF; --shadow-raised: 0 1px 2px rgba(22, 24, 29, 0.06); --shadow-overlay: 0 8px 24px rgba(22, 24, 29, 0.12);" aria-label="Option A, light theme">
+  <header class="panel-head"><span class="t-label">Option A · Light</span><span class="t-caption muted mono">accent #0F6B4F · success #4F7312</span></header>
+  <p class="t-label muted">Available balance</p>
+  <p class="t-display num"><span class="muted">$</span>12,480<span class="muted">.56</span></p>
+  <p class="t-body-small" style="color: var(--color-success)">+ $320.10 this month</p>
+  <div class="row gap-3 mt-6 wrap">
+    <button class="btn btn-primary" type="button">Send money</button>
+    <button class="btn btn-secondary" type="button">Request</button>
+    <button class="btn btn-text" type="button">View statements</button>
+  </div>
+  <ul class="list card mt-8">
+    <li><span><span class="t-body">Northside Grocers</span><span class="t-caption muted block">Today, 09:41</span></span><span class="t-body num">− $48.20</span></li>
+    <li><span><span class="t-body">Salary · Halden &amp; Co.</span><span class="t-caption muted block">Yesterday · Transfer</span></span><span class="t-body num" style="color: var(--color-success)">+ $3,250.00</span></li>
+    <li><span><span class="t-body">Interest paid</span><span class="t-caption muted block">1 Nov · Savings</span></span><span class="t-body num" style="color: var(--color-success)">+ $11.04</span></li>
+  </ul>
+  <div class="row gap-3 mt-6 wrap">
+    <span class="badge" style="color: var(--color-success)">● Paid</span>
+    <span class="badge" style="color: var(--color-warning)">● Due soon</span>
+    <span class="badge" style="color: var(--color-error)">● Overdue</span>
+  </div>
+  <div class="pair mt-8">
+    <div><span class="chip" style="background:#0F6B4F"></span><span class="t-label">accent</span><span class="t-caption muted mono">#0F6B4F · 6:1 on bg</span></div>
+    <div><span class="chip" style="background:#4F7312"></span><span class="t-label">success</span><span class="t-caption muted mono">#4F7312 · 5.12:1 on bg</span></div>
+    <div><span class="t-label">hue gap</span><span class="t-headline num">37°</span><span class="t-caption muted">accent vs success (OKLCH)</span></div>
+  </div>
+</section>
+<section class="panel" style="--color-bg: #F7F6F3; --color-surface: #FFFFFF; --color-surface-alt: #F0EEE9; --color-text: #16181D; --color-text-muted: #5F636A; --color-border: #E4E1DA; --color-border-strong: #8C8A84; --color-accent: #2E4A6B; --color-on-accent: #FFFFFF; --color-success: #1F7A3D; --color-warning: #975700; --color-error: #B3261E; --color-link: #2E4A6B; --color-on-error: #FFFFFF; --color-on-success: #FFFFFF; --color-on-warning: #FFFFFF; --shadow-raised: 0 1px 2px rgba(22, 24, 29, 0.06); --shadow-overlay: 0 8px 24px rgba(22, 24, 29, 0.12);" aria-label="Option B, light theme">
+  <header class="panel-head"><span class="t-label">Option B · Light</span><span class="t-caption muted mono">accent #2E4A6B · success #1F7A3D</span></header>
+  <p class="t-label muted">Available balance</p>
+  <p class="t-display num"><span class="muted">$</span>12,480<span class="muted">.56</span></p>
+  <p class="t-body-small" style="color: var(--color-success)">+ $320.10 this month</p>
+  <div class="row gap-3 mt-6 wrap">
+    <button class="btn btn-primary" type="button">Send money</button>
+    <button class="btn btn-secondary" type="button">Request</button>
+    <button class="btn btn-text" type="button">View statements</button>
+  </div>
+  <ul class="list card mt-8">
+    <li><span><span class="t-body">Northside Grocers</span><span class="t-caption muted block">Today, 09:41</span></span><span class="t-body num">− $48.20</span></li>
+    <li><span><span class="t-body">Salary · Halden &amp; Co.</span><span class="t-caption muted block">Yesterday · Transfer</span></span><span class="t-body num" style="color: var(--color-success)">+ $3,250.00</span></li>
+    <li><span><span class="t-body">Interest paid</span><span class="t-caption muted block">1 Nov · Savings</span></span><span class="t-body num" style="color: var(--color-success)">+ $11.04</span></li>
+  </ul>
+  <div class="row gap-3 mt-6 wrap">
+    <span class="badge" style="color: var(--color-success)">● Paid</span>
+    <span class="badge" style="color: var(--color-warning)">● Due soon</span>
+    <span class="badge" style="color: var(--color-error)">● Overdue</span>
+  </div>
+  <div class="pair mt-8">
+    <div><span class="chip" style="background:#2E4A6B"></span><span class="t-label">accent</span><span class="t-caption muted mono">#2E4A6B · 8.41:1 on bg</span></div>
+    <div><span class="chip" style="background:#1F7A3D"></span><span class="t-label">success</span><span class="t-caption muted mono">#1F7A3D · 4.97:1 on bg</span></div>
+    <div><span class="t-label">hue gap</span><span class="t-headline num">103°</span><span class="t-caption muted">accent vs success (OKLCH)</span></div>
+  </div>
+</section>
+<section class="panel" style="--color-bg: #111314; --color-surface: #181B1C; --color-surface-alt: #202425; --color-text: #ECEAE4; --color-text-muted: #A3A7A6; --color-border: #2A2F30; --color-border-strong: #666C6B; --color-accent: #5CC49B; --color-on-accent: #08201A; --color-success: #AFCB6E; --color-warning: #E6A955; --color-error: #F28B82; --color-link: #5CC49B; --color-on-error: #181B1C; --color-on-success: #181B1C; --color-on-warning: #181B1C; --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.4); --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.5);" aria-label="Option A, dark theme">
+  <header class="panel-head"><span class="t-label">Option A · Dark</span><span class="t-caption muted mono">accent #5CC49B · success #AFCB6E</span></header>
+  <p class="t-label muted">Available balance</p>
+  <p class="t-display num"><span class="muted">$</span>12,480<span class="muted">.56</span></p>
+  <p class="t-body-small" style="color: var(--color-success)">+ $320.10 this month</p>
+  <div class="row gap-3 mt-6 wrap">
+    <button class="btn btn-primary" type="button">Send money</button>
+    <button class="btn btn-secondary" type="button">Request</button>
+    <button class="btn btn-text" type="button">View statements</button>
+  </div>
+  <ul class="list card mt-8">
+    <li><span><span class="t-body">Northside Grocers</span><span class="t-caption muted block">Today, 09:41</span></span><span class="t-body num">− $48.20</span></li>
+    <li><span><span class="t-body">Salary · Halden &amp; Co.</span><span class="t-caption muted block">Yesterday · Transfer</span></span><span class="t-body num" style="color: var(--color-success)">+ $3,250.00</span></li>
+    <li><span><span class="t-body">Interest paid</span><span class="t-caption muted block">1 Nov · Savings</span></span><span class="t-body num" style="color: var(--color-success)">+ $11.04</span></li>
+  </ul>
+  <div class="row gap-3 mt-6 wrap">
+    <span class="badge" style="color: var(--color-success)">● Paid</span>
+    <span class="badge" style="color: var(--color-warning)">● Due soon</span>
+    <span class="badge" style="color: var(--color-error)">● Overdue</span>
+  </div>
+  <div class="pair mt-8">
+    <div><span class="chip" style="background:#5CC49B"></span><span class="t-label">accent</span><span class="t-caption muted mono">#5CC49B · 8.71:1 on bg</span></div>
+    <div><span class="chip" style="background:#AFCB6E"></span><span class="t-label">success</span><span class="t-caption muted mono">#AFCB6E · 10.28:1 on bg</span></div>
+    <div><span class="t-label">hue gap</span><span class="t-headline num">42°</span><span class="t-caption muted">accent vs success (OKLCH)</span></div>
+  </div>
+</section>
+<section class="panel" style="--color-bg: #111314; --color-surface: #181B1C; --color-surface-alt: #202425; --color-text: #ECEAE4; --color-text-muted: #A3A7A6; --color-border: #2A2F30; --color-border-strong: #666C6B; --color-accent: #93AFD3; --color-on-accent: #0D1726; --color-success: #6BCB86; --color-warning: #E6A955; --color-error: #F28B82; --color-link: #93AFD3; --color-on-error: #181B1C; --color-on-success: #181B1C; --color-on-warning: #181B1C; --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.4); --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.5);" aria-label="Option B, dark theme">
+  <header class="panel-head"><span class="t-label">Option B · Dark</span><span class="t-caption muted mono">accent #93AFD3 · success #6BCB86</span></header>
+  <p class="t-label muted">Available balance</p>
+  <p class="t-display num"><span class="muted">$</span>12,480<span class="muted">.56</span></p>
+  <p class="t-body-small" style="color: var(--color-success)">+ $320.10 this month</p>
+  <div class="row gap-3 mt-6 wrap">
+    <button class="btn btn-primary" type="button">Send money</button>
+    <button class="btn btn-secondary" type="button">Request</button>
+    <button class="btn btn-text" type="button">View statements</button>
+  </div>
+  <ul class="list card mt-8">
+    <li><span><span class="t-body">Northside Grocers</span><span class="t-caption muted block">Today, 09:41</span></span><span class="t-body num">− $48.20</span></li>
+    <li><span><span class="t-body">Salary · Halden &amp; Co.</span><span class="t-caption muted block">Yesterday · Transfer</span></span><span class="t-body num" style="color: var(--color-success)">+ $3,250.00</span></li>
+    <li><span><span class="t-body">Interest paid</span><span class="t-caption muted block">1 Nov · Savings</span></span><span class="t-body num" style="color: var(--color-success)">+ $11.04</span></li>
+  </ul>
+  <div class="row gap-3 mt-6 wrap">
+    <span class="badge" style="color: var(--color-success)">● Paid</span>
+    <span class="badge" style="color: var(--color-warning)">● Due soon</span>
+    <span class="badge" style="color: var(--color-error)">● Overdue</span>
+  </div>
+  <div class="pair mt-8">
+    <div><span class="chip" style="background:#93AFD3"></span><span class="t-label">accent</span><span class="t-caption muted mono">#93AFD3 · 8.26:1 on bg</span></div>
+    <div><span class="chip" style="background:#6BCB86"></span><span class="t-label">success</span><span class="t-caption muted mono">#6BCB86 · 9.32:1 on bg</span></div>
+    <div><span class="t-label">hue gap</span><span class="t-headline num">104°</span><span class="t-caption muted">accent vs success (OKLCH)</span></div>
+  </div>
+</section>
+  </div>
+  <div class="meta">
+    <section style="grid-column: 1 / -1">
+      <h2 class="t-title">Accent and success, side by side (current shown for reference)</h2>
+      <table style="margin-top:12px"><thead><tr><th>Mode</th><th></th><th>Accent</th><th>Success</th><th>Hue gap</th><th>Accent on bg</th><th>Success on bg</th><th>On-accent on accent</th></tr></thead><tbody><tr><td>light</td><td>Current</td><td class="mono"><span class="dot" style="background:#0F6B4F"></span>#0F6B4F</td><td class="mono"><span class="dot" style="background:#1F7A3D"></span>#1F7A3D</td><td class="num">16°</td><td class="num">6:1</td><td class="num">4.97:1</td><td class="num">6.48:1</td></tr><tr><td>light</td><td>Option A</td><td class="mono"><span class="dot" style="background:#0F6B4F"></span>#0F6B4F</td><td class="mono"><span class="dot" style="background:#4F7312"></span>#4F7312</td><td class="num">37°</td><td class="num">6:1</td><td class="num">5.12:1</td><td class="num">6.48:1</td></tr><tr><td>light</td><td>Option B</td><td class="mono"><span class="dot" style="background:#2E4A6B"></span>#2E4A6B</td><td class="mono"><span class="dot" style="background:#1F7A3D"></span>#1F7A3D</td><td class="num">103°</td><td class="num">8.41:1</td><td class="num">4.97:1</td><td class="num">9.09:1</td></tr><tr><td>dark</td><td>Current</td><td class="mono"><span class="dot" style="background:#5CC49B"></span>#5CC49B</td><td class="mono"><span class="dot" style="background:#6BCB86"></span>#6BCB86</td><td class="num">14°</td><td class="num">8.71:1</td><td class="num">9.32:1</td><td class="num">7.97:1</td></tr><tr><td>dark</td><td>Option A</td><td class="mono"><span class="dot" style="background:#5CC49B"></span>#5CC49B</td><td class="mono"><span class="dot" style="background:#AFCB6E"></span>#AFCB6E</td><td class="num">42°</td><td class="num">8.71:1</td><td class="num">10.28:1</td><td class="num">7.97:1</td></tr><tr><td>dark</td><td>Option B</td><td class="mono"><span class="dot" style="background:#93AFD3"></span>#93AFD3</td><td class="mono"><span class="dot" style="background:#6BCB86"></span>#6BCB86</td><td class="num">104°</td><td class="num">8.26:1</td><td class="num">9.32:1</td><td class="num">7.97:1</td></tr></tbody></table>
+    </section>
+  </div>
+</body>
+</html>
