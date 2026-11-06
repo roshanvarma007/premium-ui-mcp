@@ -2,6 +2,7 @@ import { McpServer, ResourceTemplate } from '@modelcontextprotocol/server';
 import { z } from 'zod';
 import { getDirection, getDirections } from './directions/index.js';
 import { PlatformSchema } from './platforms.js';
+import { registerBlueprintAndRubric } from './tools/blueprint-rubric.js';
 import { registerCheckContrast } from './tools/check-contrast.js';
 import { antiPatternsText, registerGetAntiPatterns } from './tools/get-anti-patterns.js';
 import { registerGetDesignDirection } from './tools/get-design-direction.js';
@@ -23,6 +24,7 @@ export function createServer(): McpServer {
   registerCheckContrast(server);
   registerGetAntiPatterns(server);
   registerReviewUi(server);
+  registerBlueprintAndRubric(server);
 
   registerResources(server);
   registerPrompts(server);

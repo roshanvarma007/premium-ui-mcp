@@ -1,0 +1,121 @@
+{
+  "id": "mobile-app",
+  "surface": "app",
+  "name": "Mobile app screen",
+  "summary": "Thumb-first screens with one job each: clear navigation, a focal element, primary actions in reach, and every state designed.",
+  "principles": [
+    "One focal point and one primary action per screen.",
+    "Primary actions live in the thumb zone (lower half); destructive actions are never the easiest tap.",
+    "Touch targets at least 48dp on Android and 44pt or px on web, with at least 8dp between targets.",
+    "Content respects safe areas and system bars (edge-to-edge with insets).",
+    "Hierarchy through size, weight and spacing before color."
+  ],
+  "structure_note": "Top app bar (title and up to two actions), scrollable content with a 16dp side margin, optional bottom navigation (3 to 5 destinations) or a single bottom-anchored primary action.",
+  "sections": [
+    {
+      "id": "navigation",
+      "name": "Navigation pattern",
+      "required": true,
+      "purpose": "Let people move between top-level destinations predictably.",
+      "guidance": [
+        "3 to 5 top-level destinations: bottom navigation bar with outline icons and always-visible labels.",
+        "More than 5: use a navigation drawer or a 'More' destination; never a scrolling bottom bar.",
+        "Detail screens use a top app bar with an up (back) affordance; do not repeat the bottom bar on deep flows like checkout."
+      ],
+      "platform_notes": {
+        "android": "Material 3 NavigationBar (Compose) or BottomNavigationView with labelVisibilityMode=labeled (XML). Predictive back must work.",
+        "web": "Fixed bottom nav only for installable web apps; otherwise a top bar with a menu."
+      }
+    },
+    {
+      "id": "header",
+      "name": "Screen header",
+      "required": true,
+      "purpose": "Tell people where they are and what the screen is for.",
+      "guidance": [
+        "Title in the title or headline role; at most two icon actions, each with a content description.",
+        "Large title (headline role) only on top-level screens; collapse it on scroll."
+      ]
+    },
+    {
+      "id": "focal-content",
+      "name": "Focal content",
+      "required": true,
+      "purpose": "The one thing this screen exists to show (a balance, a timer, a compass rose, the next task).",
+      "guidance": [
+        "Give it the largest type role and generous whitespace above it.",
+        "Put secondary information below in smaller roles and muted color."
+      ]
+    },
+    {
+      "id": "list",
+      "name": "Lists and content",
+      "required": false,
+      "purpose": "Scannable collections.",
+      "guidance": [
+        "Rows at least 48dp tall, separated by hairline dividers or spacing, not boxed cards for every row.",
+        "Leading icon or avatar, two lines of text maximum, trailing value or chevron.",
+        "Numbers right-aligned with tabular figures."
+      ]
+    },
+    {
+      "id": "primary-action",
+      "name": "Primary action",
+      "required": true,
+      "purpose": "The main thing to do next, within thumb reach.",
+      "guidance": [
+        "A full-width button anchored above the system navigation, or a FAB for creation-type actions. Never both.",
+        "Secondary actions as outlined or text buttons; destructive actions need confirmation or undo."
+      ]
+    },
+    {
+      "id": "feedback",
+      "name": "Feedback",
+      "required": true,
+      "purpose": "Confirm what happened.",
+      "guidance": [
+        "Snackbar for reversible results (with Undo), dialogs only for decisions that block progress.",
+        "Haptics for meaningful moments only (payment sent, timer done)."
+      ]
+    }
+  ],
+  "states": [
+    {
+      "name": "Empty",
+      "guidance": "Explain what will appear and offer the one action that fills it. No sad mascots unless the direction is playful."
+    },
+    {
+      "name": "Loading",
+      "guidance": "Skeletons shaped like the real content for over 300ms waits; spinners only for short, unknown waits."
+    },
+    {
+      "name": "Error",
+      "guidance": "Say what happened and what to do, with a retry action. Keep the user's input."
+    },
+    {
+      "name": "Offline",
+      "guidance": "Show cached content with a quiet banner; queue actions where safe."
+    },
+    {
+      "name": "Success",
+      "guidance": "Confirm in place with the result (amount sent, item saved) and the next likely action."
+    },
+    {
+      "name": "Permission denied",
+      "guidance": "Explain why the permission matters and link to settings; never dead-end."
+    }
+  ],
+  "accessibility": [
+    "Text scales with the system font size (sp on Android); layouts must not clip at 200%.",
+    "Every icon-only control has a content description.",
+    "Color is never the only signal (pair red/green with signs, icons or text).",
+    "Respect reduced motion and keep animations under the direction's slow duration."
+  ],
+  "avoid": [
+    "Hamburger menus for fewer than five destinations",
+    "Gradient headers and glowing FABs",
+    "Tiny icon-only toolbars without labels",
+    "Emoji as icons",
+    "Modal dialogs for success messages"
+  ]
+}

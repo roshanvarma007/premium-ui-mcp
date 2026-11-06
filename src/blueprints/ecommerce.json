@@ -1,0 +1,119 @@
+{
+  "id": "ecommerce",
+  "surface": "ecommerce",
+  "name": "E-commerce",
+  "summary": "Product first, friction last: imagery leads, price and the add-to-cart action are always obvious, checkout is short and calm.",
+  "principles": [
+    "Product imagery is the hero; UI chrome stays quiet and neutral.",
+    "Price, availability and the primary action are visible without scrolling on product pages.",
+    "Consistent product cards: same image ratio, same text structure, same alignment.",
+    "Trust signals near the decision: delivery, returns, secure payment.",
+    "Checkout removes everything that is not needed to pay."
+  ],
+  "structure_note": "Header (logo, search, account, cart with count), category or collection grid, product detail page, cart, and a separate distraction-free checkout.",
+  "sections": [
+    {
+      "id": "header",
+      "name": "Header",
+      "required": true,
+      "purpose": "Search, browse and reach the cart from anywhere.",
+      "guidance": [
+        "Search is prominent (a field on desktop, an icon that opens a full-width field on mobile).",
+        "Cart icon with an item count badge; account and help links.",
+        "Category navigation in plain text; mega menus only for large catalogs, with images kept small."
+      ]
+    },
+    {
+      "id": "listing",
+      "name": "Product listing",
+      "required": true,
+      "purpose": "Browse and compare products.",
+      "guidance": [
+        "Grid with a fixed image aspect ratio (for example 4:5), 2 columns on mobile, 3-4 on desktop.",
+        "Card: image, name (2 lines max), price in tabular numerals, optional rating and one badge at most (Sale, New).",
+        "Filters and sort in a sidebar on desktop and a bottom sheet on mobile; show the result count."
+      ]
+    },
+    {
+      "id": "product-detail",
+      "name": "Product detail",
+      "required": true,
+      "purpose": "Give everything needed to decide.",
+      "guidance": [
+        "Gallery left (swipeable on mobile), buy box right: name, price, variant pickers, quantity, primary Add to cart, secondary Save.",
+        "Variant pickers show unavailable options as disabled with a reason; selected state is unmistakable.",
+        "Delivery estimate, returns policy and size guide near the button; long description and specs below in expandable sections."
+      ],
+      "platform_notes": {
+        "android": "Keep Add to cart in a bottom-anchored bar on long product pages."
+      }
+    },
+    {
+      "id": "cart",
+      "name": "Cart",
+      "required": true,
+      "purpose": "Review and adjust before paying.",
+      "guidance": [
+        "Line items with image, name, variant, quantity stepper, line price, remove (with undo).",
+        "Order summary with subtotal, delivery and total in tabular numerals; one primary Checkout button.",
+        "Show the free-delivery threshold progress as text plus a thin bar, not a gamified banner."
+      ]
+    },
+    {
+      "id": "checkout",
+      "name": "Checkout",
+      "required": true,
+      "purpose": "Pay with confidence and minimum effort.",
+      "guidance": [
+        "Remove site navigation; show progress (Delivery, Payment, Review) and an order summary.",
+        "Guest checkout first; express payment buttons at the top.",
+        "Inline validation, correct keyboard types and autocomplete attributes on every field."
+      ]
+    },
+    {
+      "id": "confirmation",
+      "name": "Order confirmation",
+      "required": true,
+      "purpose": "Reassure and set expectations.",
+      "guidance": [
+        "Order number, delivery estimate, what happens next and a way to track or change the order.",
+        "No upsell wall before the confirmation details."
+      ]
+    }
+  ],
+  "states": [
+    {
+      "name": "Out of stock",
+      "guidance": "Say so clearly, offer notify-me or alternatives; never hide the price."
+    },
+    {
+      "name": "Empty cart",
+      "guidance": "Short message and a way back to shopping (recently viewed or categories)."
+    },
+    {
+      "name": "Payment error",
+      "guidance": "Explain the problem in plain words, keep entered data, offer another method."
+    },
+    {
+      "name": "Loading",
+      "guidance": "Image placeholders at the final aspect ratio so the grid never jumps."
+    },
+    {
+      "name": "No search results",
+      "guidance": "Suggest spelling fixes, related categories and clear the active filters."
+    }
+  ],
+  "accessibility": [
+    "Product images have descriptive alt text (what, color, angle).",
+    "Variant pickers are real radio groups with labels, not color-only swatches.",
+    "Prices are read with their currency; sale prices announce the original price too.",
+    "Focus moves sensibly when filters change and when items are added to the cart."
+  ],
+  "avoid": [
+    "Countdown timers and fake scarcity",
+    "Pop-ups before the first product view",
+    "Gradient sale banners and confetti",
+    "Inconsistent card heights and image ratios",
+    "Hidden fees revealed at the last step"
+  ]
+}

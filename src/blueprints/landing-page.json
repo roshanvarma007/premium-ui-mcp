@@ -1,0 +1,150 @@
+{
+  "id": "landing-page",
+  "surface": "landing",
+  "name": "Landing page",
+  "summary": "A single-page argument: one promise, proof, three reasons, how it works, price, objections, one repeated call to action.",
+  "principles": [
+    "One primary call to action, repeated at the end; every other link is secondary.",
+    "Above the fold: what it is, who it is for, the primary action, nothing else competing.",
+    "Each section answers one question a visitor has, in the order they have it.",
+    "Generous vertical rhythm between sections (the direction's largest spacing steps); tighter rhythm inside them.",
+    "Real, specific copy. A headline someone could disagree with beats one nobody remembers."
+  ],
+  "structure_note": "Single column of full-width sections with a constrained content width (about 64-72rem). Alternate nothing for decoration's sake: separate sections with space and a hairline, not background stripes or gradients.",
+  "sections": [
+    {
+      "id": "nav",
+      "name": "Navigation",
+      "required": true,
+      "purpose": "Orient and offer the primary action without stealing attention from the hero.",
+      "guidance": [
+        "Logo or wordmark left, 2 to 4 text links, one primary button right.",
+        "No mega menus on a landing page. Collapse links into a menu below about 40rem width.",
+        "Sticky only if the page is long; keep it the bg color with a bottom hairline."
+      ],
+      "platform_notes": {
+        "web": "Use <header> and <nav aria-label=\"Main\">; the theme toggle is an icon button with aria-label."
+      }
+    },
+    {
+      "id": "hero",
+      "name": "Hero",
+      "required": true,
+      "purpose": "Say what it is, who it is for and what to do next in five seconds.",
+      "guidance": [
+        "Eyebrow (label role) naming the audience, headline (display role), one or two sentence subline (body, muted).",
+        "Primary button plus at most one secondary action. Never two primaries.",
+        "Left-aligned text reads faster than centered for anything longer than one line.",
+        "A product screenshot or real photograph beats abstract 3D shapes or gradient blobs."
+      ],
+      "copy": {
+        "headline_max_words": 8,
+        "body_max_words": 25,
+        "notes": "State the outcome, not the feature. No 'Welcome to the future of X', no 'Unlock your potential'."
+      }
+    },
+    {
+      "id": "social-proof",
+      "name": "Social proof",
+      "required": true,
+      "purpose": "Show that real people or companies already trust it.",
+      "guidance": [
+        "A row of customer names or logos in muted text, or one short quote with a name and role, or one hard number.",
+        "Monochrome logos only; colored logos fight the accent.",
+        "Never fake: no invented logos, no 'Trusted by 10,000+ teams' without a source."
+      ]
+    },
+    {
+      "id": "features",
+      "name": "Three reasons",
+      "required": true,
+      "purpose": "Give the three strongest reasons to choose it.",
+      "guidance": [
+        "Three blocks maximum, in a row on desktop, stacked on mobile.",
+        "Each: short title (title role) and one or two sentences (body-small, muted). An icon is optional and must come from one set.",
+        "Cards use surface + hairline border; no shadows, no glow, no gradient icons."
+      ],
+      "copy": { "headline_max_words": 5, "body_max_words": 30 }
+    },
+    {
+      "id": "how-it-works",
+      "name": "How it works",
+      "required": false,
+      "purpose": "Remove uncertainty about effort: three numbered steps.",
+      "guidance": [
+        "Numbered steps (01, 02, 03 in tabular label style), each with a title and one sentence.",
+        "Show the real product at the step where it matters most."
+      ],
+      "copy": { "body_max_words": 20 }
+    },
+    {
+      "id": "pricing",
+      "name": "Pricing",
+      "required": false,
+      "purpose": "Make the price and what it includes unambiguous.",
+      "guidance": [
+        "Two or three plans. Highlight the recommended one with an accent border, not a gradient or a scale transform.",
+        "Prices in tabular numerals; the period ('per month') in muted body text.",
+        "Each plan states who it is for in one line and has its own action."
+      ]
+    },
+    {
+      "id": "faq",
+      "name": "FAQ",
+      "required": false,
+      "purpose": "Answer the objections that stop people from acting.",
+      "guidance": [
+        "Five to eight real questions as native disclosure elements (details/summary) or accessible accordions.",
+        "Answers are direct and specific: security, cancellation, data, pricing changes."
+      ]
+    },
+    {
+      "id": "final-cta",
+      "name": "Final call to action",
+      "required": true,
+      "purpose": "Repeat the single primary action once the case has been made.",
+      "guidance": [
+        "Restate the outcome in one line (headline role) and repeat the same primary button label as the hero.",
+        "No new information and no new offers here."
+      ],
+      "copy": { "headline_max_words": 10 }
+    },
+    {
+      "id": "footer",
+      "name": "Footer",
+      "required": true,
+      "purpose": "Legal, contact and secondary navigation.",
+      "guidance": [
+        "Muted body-small text, grouped links, legal line, no marketing copy.",
+        "Contact and status links where relevant (support, security, status page)."
+      ]
+    }
+  ],
+  "states": [
+    {
+      "name": "No JavaScript",
+      "guidance": "Content and links work without scripts; the theme falls back to the system setting."
+    },
+    {
+      "name": "Form error",
+      "guidance": "If the hero or final CTA has an email field, show inline errors in the error color with text, not color alone."
+    },
+    {
+      "name": "Success",
+      "guidance": "After sign-up, confirm in place with what happens next (for example 'Check your inbox')."
+    }
+  ],
+  "accessibility": [
+    "One h1 (the hero headline); sections use h2 in order.",
+    "Every image has alt text or alt=\"\" when decorative.",
+    "Visible focus styles on every link and button; a skip link to main content.",
+    "Respect prefers-reduced-motion for any scroll or entrance animation."
+  ],
+  "avoid": [
+    "Gradient hero backgrounds, floating blobs, glassmorphism cards",
+    "More than three feature blocks or a features grid of nine",
+    "Testimonials carousels that auto-rotate",
+    "Stock photos of people pointing at laptops",
+    "Multiple competing primary buttons"
+  ]
+}
