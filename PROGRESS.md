@@ -253,4 +253,38 @@ Milestone-by-milestone record of the build (see SPEC.md section 14).
 - `get_review_rubric(direction_id?)` returns 12 weighted criteria with pass and fail signals,
   scoring instructions (0-2 × weight, re-check below 70%), and direction-specific
   present/absent checks. The server does not analyze images.
-- Results: 153/153 tests pass; lint and typecheck pass. The package is ~94 KB packed.
+- Results: 153/153 tests pass; lint and typecheck pass. The package is 89.8 KB packed.
+
+## M9 (partial, as instructed): Skill and fintech-trust preview. **Stopped for your visual review.**
+
+- `skills/premium-ui/SKILL.md`, checked against the Agent Skills spec and the Claude Code skills docs:
+  - `name` matches the folder. `description` is 200 characters or fewer (claude.ai uploads may
+    cap at 200; the spec allows 1024). Extra trigger phrases go in `when_to_use`, which only
+    Claude Code reads.
+  - The body is about 90 lines, with long material in `references/` (`principles.md`,
+    `anti-patterns.md`, `platforms.md`).
+  - It covers the brief-first rule (at most 4 questions), a stack detection table, theme files
+    before screens, the blueprint, tokens only, `review_ui` until clean, the screenshot rubric,
+    and switching to an alternate direction when one is rejected.
+  - The Skill refers to tools by bare name rather than `mcp__...`, because the full name
+    depends on how the server is installed (plugin or plain).
+- `tests/skill.test.ts` checks the frontmatter, body length, that every referenced file exists,
+  and that every tool named in the Skill is registered on the server.
+- Preview page: `npm run preview -- fintech-trust` writes `examples/previews/fintech-trust.html`
+  (self-contained, with self-hosted fonts). It shows light and dark side by side: balance hero,
+  primary/secondary/text buttons, plain and interactive cards, activity list, input with an
+  error state, status badges, palette swatches with contrast, the type scale, spacing, radii,
+  elevation, a review checklist and the full WCAG table. It is generated from the direction
+  data, so it works for every future direction. A screenshot is saved at
+  `examples/previews/fintech-trust.jpg`.
+- Verified in the browser pane at 1400px: all five font files load, there is no horizontal
+  overflow, and both themes render.
+- **Open question for your review:** success green (#1F7A3D light / #6BCB86 dark) is close in
+  hue to the accent green (#0F6B4F / #5CC49B). It passes contrast, but may blur "primary action"
+  versus "positive amount". Options: keep it; move success toward a yellower green; or switch
+  the accent to a muted ink-blue.
+- Not done (by instruction): the other 5 to 7 directions, and their previews.
+- Results: 157/157 tests pass; lint and typecheck pass. The package is 95.4 KB packed
+  (the Skill is now included).
+- This branch (`m9-skill-preview`) is committed but **not merged into main**, because M9 is
+  incomplete until you approve the direction.
