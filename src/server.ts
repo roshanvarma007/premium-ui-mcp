@@ -7,6 +7,7 @@ import { antiPatternsText, registerGetAntiPatterns } from './tools/get-anti-patt
 import { registerGetDesignDirection } from './tools/get-design-direction.js';
 import { registerGetThemeCode } from './tools/get-theme-code.js';
 import { registerListDirections } from './tools/list-directions.js';
+import { registerReviewUi } from './tools/review-ui.js';
 import { SERVER_NAME, SERVER_VERSION } from './version.js';
 
 /**
@@ -21,6 +22,7 @@ export function createServer(): McpServer {
   registerListDirections(server);
   registerCheckContrast(server);
   registerGetAntiPatterns(server);
+  registerReviewUi(server);
 
   registerResources(server);
   registerPrompts(server);

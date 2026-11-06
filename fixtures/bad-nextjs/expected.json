@@ -1,0 +1,21 @@
+{
+  "platform": "nextjs",
+  "rules": [
+    "use-client-root",
+    "next-font-link",
+    "next-img",
+    "img-alt",
+    "missing-lang",
+    "theme-flash",
+    "gradient-usage",
+    "glassmorphism",
+    "glow-shadow",
+    "ai-palette",
+    "hardcoded-color",
+    "tailwind-arbitrary-value",
+    "off-grid-spacing",
+    "emoji-as-icon",
+    "default-font-fallthrough",
+    "clickable-non-interactive"
+  ]
+}

@@ -1,0 +1,87 @@
+body {
+  font-family: Inter, sans-serif;
+  background: #0F172A;
+  color: #E2E8F0;
+}
+
+.hero {
+  background: linear-gradient(135deg, #6366F1 0%, #A855F7 50%, #EC4899 100%);
+  padding: 60px 22px;
+  border-radius: 32px;
+  box-shadow: 0 0 40px rgba(139, 92, 246, 0.6);
+}
+
+h1 {
+  font-size: 54px;
+}
+
+.subtitle {
+  font-size: 19px;
+  border-radius: 999px;
+  color: #22D3EE;
+}
+
+.cta {
+  background: #FFFFFF;
+  color: #000000;
+  border-radius: 9999px;
+  height: 36px;
+  padding: 10px 26px;
+  font-size: 15px;
+  outline: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+button.icon {
+  height: 32px;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.cards {
+  display: flex;
+  gap: 18px;
+  margin-top: 45px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  font-size: 13px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.card small {
+  font-size: 10px;
+  color: #64748B;
+  border-radius: 7px;
+}
+
+.badge {
+  font-size: 11px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.label {
+  font-size: 17px;
+  border-radius: 9999px;
+  color: #6B7280;
+  background: #F3F4F6;
+}
+
+@keyframes float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+
+.muted {
+  color: #9CA3AF;
+  background-color: #FFFFFF;
+}
+
+.price {
+  font-size: 22px;
+}

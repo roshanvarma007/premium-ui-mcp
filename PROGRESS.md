@@ -200,3 +200,42 @@ Milestone-by-milestone record of the build (see SPEC.md section 14).
   anything on it or start a second instance. To check by hand, run
   `./gradlew :app:installBundledDebug` in that folder and toggle dark theme on the device.
 - Results: 108/108 tests pass; lint and typecheck pass.
+
+## M7: `review_ui` for all shipped platforms (done)
+
+- Architecture (`src/review/`):
+  - Platform scanners extract normalized facts. `scan/css.ts` covers stylesheets, HTML
+    `<style>`, `style=""`, JSX style objects and CSS-in-JS. `scan/tailwind.ts` reads class
+    lists, `scan/web.ts` handles HTML/JS/JSX, and `scan/android.ts` handles Kotlin and XML.
+  - 17 common rules run on those facts, so every platform is checked the same way
+    (`rules/common.ts`). About 25 platform rules sit on top (`rules/platform.ts`).
+  - Comments are blanked with line numbers preserved. Generated token files are exempt from
+    the "hardcoded" rules, and minified build output is skipped.
+  - The engine de-duplicates, caps findings at 8 per rule per file (noting the overflow), and
+    caps the score cost per rule. It only suppresses an info finding when a stronger finding
+    on the same line says the same thing.
+  - `review_ui` returns `{ score, findings: [{ rule, severity, file, line, message, fix }], summary }`.
+  - Every rule is documented in `docs/review-rules.md`, and a test fails if any emitted id
+    is missing from it.
+- Fixtures:
+  - `fixtures/bad-<platform>/` for all 6 platforms. Each `expected.json` lists 14 to 26 rules
+    that must fire, and every one does.
+  - `fixtures/good-<platform>/` produces **zero findings of any severity**.
+- False-positive review: 30 hand-written realistic snippets (5 per platform) in
+  `fixtures/realistic/`, plus all six sample apps. **Zero findings on all of them**, and both
+  are now tests. Problems found and fixed along the way:
+  1. Next.js layouts using `dangerouslySetInnerHTML={{ __html: NO_FLASH_SCRIPT }}` were not
+     recognized as a pre-paint theme script.
+  2. `layout_width="0dp"` (weight / constraints) was counted as a tiny touch target.
+  3. Minified Tailwind `output.css` was treated as source.
+  4. Short hex-looking strings such as `'#add'` (hash routes) were treated as colors.
+  5. `Icon(Modifier.size(24.dp))` inside an `IconButton` was flagged as a touch target.
+  6. `©`, `™` and arrows matched `Extended_Pictographic` and were flagged as emoji. The emoji
+     check now uses `Emoji_Presentation` or VS16.
+  7. Icon-button detection broke on `=>` inside JSX attributes.
+- Tuning: the `uniform-pill-everything` threshold went from 75% to 60% of radii; real
+  pill-heavy UIs still mix in a few small radii.
+- Known limits: heuristics, not a parser. Rules work per file or project-wide, not per
+  rendered element, so text/background contrast is only checked when both colors are set in
+  the same rule block, style object or class list.
+- Results: 140/140 tests pass; lint and typecheck pass.

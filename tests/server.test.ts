@@ -152,3 +152,41 @@ describe('get_theme_code', () => {
     expect(r.isError).toBe(true);
   });
 });
+
+describe('review_ui', () => {
+  it('scores code and returns findings with fixes', async () => {
+    const r = await call('review_ui', {
+      platform: 'html',
+      files: [
+        { path: 'a.css', content: '.hero { background: linear-gradient(#6366F1, #A855F7); }' },
+      ],
+    });
+    expect(r.isError).toBeFalsy();
+    const findings = r.structuredContent?.findings as Array<{ rule: string; fix: string }>;
+    expect(findings.map((f) => f.rule)).toContain('gradient-usage');
+    expect(findings.every((f) => f.fix.length > 10)).toBe(true);
+    expect(r.structuredContent?.score).toBeLessThan(100);
+    expect(text(r)).toMatch(/Fix:/);
+  });
+  it('returns a perfect score for clean code', async () => {
+    const r = await call('review_ui', {
+      platform: 'html',
+      direction_id: 'fintech-trust',
+      files: [
+        {
+          path: 'a.css',
+          content: '.card { padding: var(--spacing-4); color: var(--color-text); }',
+        },
+      ],
+    });
+    expect(r.structuredContent?.score).toBe(100);
+  });
+  it('rejects an unknown direction', async () => {
+    const r = await call('review_ui', {
+      platform: 'html',
+      direction_id: 'nope',
+      files: [{ path: 'a.css', content: '' }],
+    });
+    expect(r.isError).toBe(true);
+  });
+});
