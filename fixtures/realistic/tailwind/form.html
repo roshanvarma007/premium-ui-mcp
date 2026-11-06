@@ -1,0 +1,13 @@
+<form class="mx-auto mt-12 grid max-w-md gap-6" action="/transfer" method="post">
+  <div class="grid gap-2">
+    <label for="amount" class="t-label text-text">Amount</label>
+    <input id="amount" name="amount" inputmode="decimal" class="min-h-touch rounded-md border border-border-strong bg-surface px-3 text-body tabular-nums focus-visible:outline-2 focus-visible:outline-accent" aria-describedby="amount-hint">
+    <p id="amount-hint" class="t-caption text-text-muted">You can send up to $5,000 a day.</p>
+  </div>
+  <div class="grid gap-2">
+    <label for="note" class="t-label text-text">Note (optional)</label>
+    <textarea id="note" name="note" rows="3" class="rounded-md border border-border-strong bg-surface px-3 py-2 text-body"></textarea>
+  </div>
+  <p role="alert" class="text-body-small text-error">Enter an amount greater than $0.</p>
+  <button type="submit" class="min-h-touch w-full rounded-md bg-accent text-on-accent transition-colors motion-reduce:transition-none">Review transfer</button>
+</form>

@@ -1,0 +1,66 @@
+/* Screen styles: tokens only (no hex, no off-scale values). */
+.page {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0 var(--spacing-6);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--spacing-16);
+}
+
+.content {
+  display: grid;
+  gap: var(--spacing-12);
+  padding-block: var(--spacing-12) var(--spacing-24);
+}
+
+.balance {
+  margin-top: var(--spacing-2);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-6);
+}
+
+.grid {
+  display: grid;
+  gap: var(--spacing-6);
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+.account-balance {
+  margin-top: var(--spacing-6);
+}
+
+.list {
+  list-style: none;
+  margin-top: var(--spacing-4);
+  padding: 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4) var(--spacing-6);
+}
+
+.row + .row {
+  border-top: 1px solid var(--color-border);
+}
+
+.row-date {
+  display: block;
+}
+
+.positive {
+  color: var(--color-success);
+}

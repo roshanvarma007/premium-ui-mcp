@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ledgerline</string>
+    <string name="back">Back</string>
+    <string name="accounts_title">Accounts</string>
+    <string name="empty_title">No transactions yet</string>
+    <string name="connect_account">Connect an account</string>
+    <string name="legal">© 2026 Ledgerline Ltd. Rates up to 3.1% a year.</string>
+    <string name="transfer_hint">You can send up to $5,000 a day → about £3,950.</string>
+</resources>

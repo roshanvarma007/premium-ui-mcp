@@ -1,0 +1,26 @@
+{
+  "platform": "tailwind",
+  "direction_id": "fintech-trust",
+  "rules": [
+    "gradient-usage",
+    "glassmorphism",
+    "glow-shadow",
+    "ai-palette",
+    "hardcoded-color",
+    "tailwind-arbitrary-value",
+    "tailwind-default-palette",
+    "emoji-as-icon",
+    "font-size-sprawl",
+    "tiny-text",
+    "off-grid-spacing",
+    "radius-sprawl",
+    "uniform-pill-everything",
+    "shadow-everywhere",
+    "default-font-fallthrough",
+    "low-touch-target",
+    "pure-black-white",
+    "clickable-non-interactive",
+    "focus-outline-removed",
+    "reduced-motion"
+  ]
+}

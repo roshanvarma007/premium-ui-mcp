@@ -1,0 +1,26 @@
+{
+  "platform": "react",
+  "rules": [
+    "contrast-fail",
+    "hardcoded-color",
+    "ai-palette",
+    "too-many-accents",
+    "gradient-usage",
+    "glassmorphism",
+    "glow-shadow",
+    "shadow-everywhere",
+    "emoji-as-icon",
+    "font-size-sprawl",
+    "tiny-text",
+    "off-grid-spacing",
+    "radius-sprawl",
+    "uniform-pill-everything",
+    "pure-black-white",
+    "low-touch-target",
+    "clickable-non-interactive",
+    "icon-button-label",
+    "img-alt",
+    "theme-flash",
+    "reduced-motion"
+  ]
+}

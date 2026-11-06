@@ -1,0 +1,21 @@
+{
+  "platform": "compose",
+  "direction_id": "fintech-trust",
+  "rules": [
+    "hardcoded-color",
+    "ai-palette",
+    "gradient-usage",
+    "glassmorphism",
+    "glow-shadow",
+    "shadow-everywhere",
+    "emoji-as-icon",
+    "font-size-sprawl",
+    "tiny-text",
+    "off-grid-spacing",
+    "radius-sprawl",
+    "low-touch-target",
+    "default-font-fallthrough",
+    "compose-literal-font-size",
+    "compose-default-theme"
+  ]
+}

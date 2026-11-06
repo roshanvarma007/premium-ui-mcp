@@ -1,0 +1,32 @@
+{
+  "platform": "html",
+  "direction_id": "fintech-trust",
+  "rules": [
+    "contrast-fail",
+    "missing-viewport",
+    "missing-lang",
+    "img-alt",
+    "clickable-non-interactive",
+    "icon-button-label",
+    "emoji-as-icon",
+    "hardcoded-color",
+    "gradient-usage",
+    "glassmorphism",
+    "glow-shadow",
+    "ai-palette",
+    "too-many-accents",
+    "pure-black-white",
+    "font-size-sprawl",
+    "tiny-text",
+    "off-grid-spacing",
+    "radius-sprawl",
+    "uniform-pill-everything",
+    "shadow-everywhere",
+    "default-font-fallthrough",
+    "low-touch-target",
+    "focus-outline-removed",
+    "theme-flash",
+    "reduced-motion",
+    "px-font-size"
+  ]
+}
