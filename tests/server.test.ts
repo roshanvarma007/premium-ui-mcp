@@ -190,3 +190,29 @@ describe('review_ui', () => {
     expect(r.isError).toBe(true);
   });
 });
+
+describe('get_layout_blueprint and get_review_rubric', () => {
+  it('returns an ordered blueprint merged with direction rules', async () => {
+    const r = await call('get_layout_blueprint', {
+      surface: 'landing-page',
+      direction_id: 'fintech-trust',
+    });
+    expect(r.isError).toBeFalsy();
+    expect(text(r)).toMatch(/1\. \*\*Navigation\*\*/);
+    expect(text(r)).toMatch(/Fintech Trust specifics/);
+  });
+  it('rejects unknown surfaces with the valid list', async () => {
+    const r = await call('get_layout_blueprint', {
+      surface: 'spaceship',
+      direction_id: 'fintech-trust',
+    });
+    expect(r.isError).toBe(true);
+    expect(text(r)).toMatch(/landing, app, game, dashboard, ecommerce/);
+  });
+  it('returns the rubric, with direction checks when asked', async () => {
+    const r = await call('get_review_rubric', { direction_id: 'fintech-trust' });
+    expect(text(r)).toMatch(/Score each criterion 0/);
+    expect(text(r)).toMatch(/Absent: gradients/);
+    expect(r.structuredContent?.max_score).toBeGreaterThan(20);
+  });
+});

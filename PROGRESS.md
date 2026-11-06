@@ -239,3 +239,18 @@ Milestone-by-milestone record of the build (see SPEC.md section 14).
   rendered element, so text/background contrast is only checked when both colors are set in
   the same rule block, style object or class list.
 - Results: 140/140 tests pass; lint and typecheck pass.
+
+## M8: Blueprints and rubric (done)
+
+- `src/schema/blueprint.schema.ts` (zod, with a generated and committed
+  `blueprint.schema.json`) and five validated blueprint files in `src/blueprints/`: landing
+  page (sections in the SPEC order, with copy-length limits), mobile app (navigation pattern,
+  48dp targets, safe areas, thumb zone, six states), game UI (HUD, 64dp controls, readability
+  over busy scenes, reward moments), dashboard, and e-commerce.
+- `get_layout_blueprint(surface, direction_id)` returns the ordered sections, principles,
+  states, accessibility and avoid list, merged with the direction's component rules and
+  signature details. It accepts surface aliases (`landing-page`, `store`, `mobile-app`, ...).
+- `get_review_rubric(direction_id?)` returns 12 weighted criteria with pass and fail signals,
+  scoring instructions (0-2 × weight, re-check below 70%), and direction-specific
+  present/absent checks. The server does not analyze images.
+- Results: 153/153 tests pass; lint and typecheck pass. The package is ~94 KB packed.

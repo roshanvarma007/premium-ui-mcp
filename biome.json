@@ -9,7 +9,7 @@
       "!fixtures",
       "!examples",
       "!**/__snapshots__",
-      "!src/schema/direction.schema.json",
+      "!src/schema/*.schema.json",
       "!**/*.md"
     ]
   },
