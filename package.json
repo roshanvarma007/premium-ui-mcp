@@ -1,0 +1,65 @@
+{
+  "name": "premium-ui-mcp",
+  "version": "0.0.0",
+  "description": "MCP server + Claude Skill that gives AI-built apps and websites a premium, context-aware design instead of the generic AI look.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Roshan Varma",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roshanvarma007/premium-ui-mcp.git"
+  },
+  "homepage": "https://github.com/roshanvarma007/premium-ui-mcp#readme",
+  "bugs": "https://github.com/roshanvarma007/premium-ui-mcp/issues",
+  "keywords": [
+    "mcp",
+    "design",
+    "ui",
+    "android",
+    "compose",
+    "tailwind",
+    "claude",
+    "design-system",
+    "nextjs",
+    "react"
+  ],
+  "bin": {
+    "premium-ui-mcp": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node scripts/clean.mjs && tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "check:size": "node scripts/check-pack-size.mjs",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run lint && npm run typecheck && npm test && npm run build",
+    "gen:schema": "npm run build && node scripts/gen-schema.mjs",
+    "gen:samples": "vitest run tests/samples.test.ts -u",
+    "preview": "npm run build && node scripts/gen-preview.mjs",
+    "preview:compare": "npm run build && node scripts/gen-preview.mjs fintech-trust --compare"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.4.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.6.5",
+    "@modelcontextprotocol/client": "^2.4.0",
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}

@@ -147,3 +147,16 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# --- premium-ui-mcp additions ---
+# Android / Gradle (example sample projects)
+.gradle/
+build/
+local.properties
+.idea/
+*.iml
+.kotlin/
+captures/
+
+# Generated preview screenshots (keep committed ones under examples/previews)
+*.tmp.png

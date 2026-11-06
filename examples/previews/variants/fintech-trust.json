@@ -1,0 +1,24 @@
+{
+  "direction": "fintech-trust",
+  "question": "Success green is close to the accent green. Which fix?",
+  "options": [
+    {
+      "key": "A",
+      "name": "Option A: yellower success green",
+      "description": "Keep the deep-green accent. Move success toward olive so positive amounts read differently from actions (hue gap about 15° becomes about 40°).",
+      "color": {
+        "light": { "success": "#4F7312" },
+        "dark": { "success": "#AFCB6E" }
+      }
+    },
+    {
+      "key": "B",
+      "name": "Option B: muted ink-blue accent, green only for success",
+      "description": "Accent becomes a desaturated ink-blue (not navy: lightness 0.40 light / 0.75 dark, low chroma). Green is reserved for success and gains (hue gap about 100°).",
+      "color": {
+        "light": { "accent": "#2E4A6B", "on_accent": "#FFFFFF" },
+        "dark": { "accent": "#93AFD3", "on_accent": "#0D1726" }
+      }
+    }
+  ]
+}

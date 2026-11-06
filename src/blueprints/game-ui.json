@@ -1,0 +1,112 @@
+{
+  "id": "game-ui",
+  "surface": "game",
+  "name": "Game UI",
+  "summary": "Readable over motion, reachable mid-play and generous with feedback: HUD at the edges, big buttons, clear reward moments.",
+  "principles": [
+    "The play area is the focal point; UI hugs the edges and never covers the action.",
+    "Everything must read at a glance over busy, moving backgrounds.",
+    "Every input gets immediate feedback (visual, audio and haptic where available) within 100ms.",
+    "Rewards are moments: make them big, brief and skippable.",
+    "Playful does not mean noisy: one accent, consistent outline weight, a limited palette."
+  ],
+  "structure_note": "Layered: game canvas, HUD layer at the screen edges (score and resources top, actions bottom), modal layer for pause, results and rewards.",
+  "sections": [
+    {
+      "id": "hud",
+      "name": "HUD",
+      "required": true,
+      "purpose": "Show the state the player needs mid-play: score, lives, time, currency.",
+      "guidance": [
+        "Top-left and top-right corners for status; keep the center clear.",
+        "Numbers use a chunky display font with tabular figures so they do not jitter as they change.",
+        "Group related values in one pill or plate with a solid background, not floating text."
+      ]
+    },
+    {
+      "id": "controls",
+      "name": "Controls",
+      "required": true,
+      "purpose": "Inputs reachable without looking.",
+      "guidance": [
+        "Primary action buttons at least 64dp (or px), bottom corners in the thumb arcs.",
+        "Pause always available in a corner, at least 48dp, never next to the primary action.",
+        "Clear pressed states (scale to 0.96 and darken), no hover-only affordances on touch."
+      ]
+    },
+    {
+      "id": "readability",
+      "name": "Readability over backgrounds",
+      "required": true,
+      "purpose": "Keep text legible over any scene.",
+      "guidance": [
+        "Put text on solid plates or use a 2-3dp outline or stroke in a dark ink color; never rely on drop shadows alone.",
+        "Minimum 16 for in-game text, 20+ for anything read mid-action.",
+        "Check contrast against the brightest and darkest parts of the scene."
+      ]
+    },
+    {
+      "id": "menus",
+      "name": "Menus",
+      "required": true,
+      "purpose": "Start, levels, settings, shop.",
+      "guidance": [
+        "One big primary button (Play) per screen; everything else secondary.",
+        "Level select as a clear grid or path with locked, current and completed states.",
+        "Settings include sound, music, haptics, reduced motion and colorblind-safe options."
+      ]
+    },
+    {
+      "id": "feedback",
+      "name": "Reward and feedback moments",
+      "required": true,
+      "purpose": "Make progress feel good without slowing play.",
+      "guidance": [
+        "Score pops, combo counters and star reveals take 300-800ms and can be tapped to skip.",
+        "Use scale and opacity; avoid full-screen flashes (photosensitivity) and long blocking animations.",
+        "Failure is encouraging and fast: one tap to retry."
+      ]
+    },
+    {
+      "id": "results",
+      "name": "Results screen",
+      "required": false,
+      "purpose": "Summarize the run and offer the next step.",
+      "guidance": [
+        "The outcome (stars, score) is the focal point; best score below in a smaller role.",
+        "Primary: Next level or Retry. Secondary: Home, Share."
+      ]
+    }
+  ],
+  "states": [
+    {
+      "name": "Paused",
+      "guidance": "Dim the scene with a solid scrim (not blur), show Resume as the primary action."
+    },
+    {
+      "name": "Loading",
+      "guidance": "Short tips or a progress bar with real progress; never a spinner over a frozen frame."
+    },
+    {
+      "name": "Offline or no ads",
+      "guidance": "Rewards and progress never depend on a network call the player cannot see."
+    },
+    {
+      "name": "Locked",
+      "guidance": "Locked content shows what unlocks it, with the requirement in plain words."
+    }
+  ],
+  "accessibility": [
+    "Never use color alone for game state (add shapes, icons or patterns); offer colorblind-safe palettes.",
+    "Respect reduced motion: replace screen shake and flashes with simple fades.",
+    "Remappable or large controls; avoid time-critical precision taps for basic progress.",
+    "Subtitles or captions for dialogue and important audio cues."
+  ],
+  "avoid": [
+    "Neon glows and lens flares on every element",
+    "Thin text over gameplay",
+    "Confirm dialogs for every action",
+    "Store prompts interrupting play",
+    "Emoji standing in for game icons"
+  ]
+}

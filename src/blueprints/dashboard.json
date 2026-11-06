@@ -1,0 +1,104 @@
+{
+  "id": "dashboard",
+  "surface": "dashboard",
+  "name": "Dashboard",
+  "summary": "Answer 'how are we doing and what needs attention?' in one glance, then let people drill in.",
+  "principles": [
+    "The top of the page answers the main question with 3 to 5 key numbers.",
+    "Density is a feature for expert tools, but alignment and a strict grid keep it calm.",
+    "Charts serve a question; every chart has a title that states the insight or the measure.",
+    "Neutral chrome, color reserved for data and status.",
+    "Tables beat cards for comparing many items."
+  ],
+  "structure_note": "App shell with a left sidebar (collapsible) or top navigation, a page header with title, date range and primary action, a KPI row, then charts and tables on a 12-column grid with consistent gutters.",
+  "sections": [
+    {
+      "id": "shell",
+      "name": "Navigation shell",
+      "required": true,
+      "purpose": "Move between areas without losing context.",
+      "guidance": [
+        "Left sidebar with grouped text labels and outline icons; the current item uses the accent with a subtle surface_alt background.",
+        "Collapse to icons at medium widths; to a top bar plus menu on mobile.",
+        "Workspace or account switcher at the top, user menu at the bottom."
+      ]
+    },
+    {
+      "id": "page-header",
+      "name": "Page header",
+      "required": true,
+      "purpose": "Say what this view is and set its scope.",
+      "guidance": [
+        "Title (headline role), a short description if needed, date-range or filter controls, one primary action right-aligned.",
+        "Filters show their active state and can be cleared in one click."
+      ]
+    },
+    {
+      "id": "kpis",
+      "name": "Key numbers",
+      "required": true,
+      "purpose": "The 3 to 5 numbers that answer the main question.",
+      "guidance": [
+        "Each: label (label role, muted), value (headline role, tabular numerals), change versus the previous period with sign and icon, not color alone.",
+        "Same height and alignment; no sparkline unless it adds information."
+      ]
+    },
+    {
+      "id": "charts",
+      "name": "Charts",
+      "required": false,
+      "purpose": "Show trends and composition.",
+      "guidance": [
+        "Line charts for trends, bars for comparisons; avoid pie charts with more than 4 slices and all 3D charts.",
+        "Use one series color (the accent) plus neutrals; add more hues only for genuinely categorical data, in a deliberate order.",
+        "Light gridlines, direct labels where possible, tooltips with exact values."
+      ]
+    },
+    {
+      "id": "table",
+      "name": "Data table",
+      "required": true,
+      "purpose": "Compare and act on many items.",
+      "guidance": [
+        "Sticky header, left-aligned text, right-aligned numbers with tabular figures, row height 40-48.",
+        "Sorting on clear headers, row actions on hover plus a visible overflow menu for touch and keyboard.",
+        "Status as a small labeled badge (dot + text), not a full colored row."
+      ]
+    }
+  ],
+  "states": [
+    {
+      "name": "Empty",
+      "guidance": "Explain what will show here and how to get data in (connect, import, invite)."
+    },
+    {
+      "name": "Loading",
+      "guidance": "Skeleton KPI tiles and table rows; keep layout stable so nothing jumps."
+    },
+    {
+      "name": "Partial data",
+      "guidance": "Mark incomplete periods clearly (dashed line, 'so far' label)."
+    },
+    {
+      "name": "Error",
+      "guidance": "Per-widget errors with retry; one failing chart does not blank the page."
+    },
+    {
+      "name": "No permission",
+      "guidance": "Say who can grant access instead of hiding the area silently."
+    }
+  ],
+  "accessibility": [
+    "Charts have a text alternative (summary sentence or data table).",
+    "Status uses text and icons, never color alone.",
+    "Full keyboard support for tables, filters and menus; visible focus.",
+    "Numbers and units are read correctly (for example aria-label '12.4 percent increase')."
+  ],
+  "avoid": [
+    "Dark navy dashboards with neon charts",
+    "A card for every number with heavy shadows",
+    "Rainbow chart palettes",
+    "Gauges and speedometers for simple numbers",
+    "Animated counters on load"
+  ]
+}

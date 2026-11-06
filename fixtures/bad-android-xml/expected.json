@@ -1,0 +1,20 @@
+{
+  "platform": "android-xml",
+  "direction_id": "fintech-trust",
+  "rules": [
+    "contrast-fail",
+    "hardcoded-color",
+    "ai-palette",
+    "gradient-usage",
+    "shadow-everywhere",
+    "emoji-as-icon",
+    "font-size-sprawl",
+    "tiny-text",
+    "off-grid-spacing",
+    "radius-sprawl",
+    "low-touch-target",
+    "default-font-fallthrough",
+    "xml-text-size-unit",
+    "xml-text-appearance"
+  ]
+}

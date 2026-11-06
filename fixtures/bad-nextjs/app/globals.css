@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+body {
+  font-family: Inter, sans-serif;
+}
+
+.card {
+  background: linear-gradient(180deg, #312E81, #0F172A);
+  box-shadow: 0 0 24px rgba(168, 85, 247, 0.5);
+}
